@@ -29,7 +29,7 @@ public class ProjectDAOImpl implements DAO<Project> {
     public void create(ProjectDomain projectDomain) {
         Session session = sessionFactory.getCurrentSession();
         Transaction transaction = session.beginTransaction();
-        Account account = (Account) session.get(Account.class, projectDomain.getManager_id());
+        Account account = (Account) session.get(Account.class, projectDomain.getManagerId());
         Project project = new Project(projectDomain, account);
         session.save(project);
         transaction.commit();

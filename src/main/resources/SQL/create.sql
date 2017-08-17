@@ -1,14 +1,15 @@
 CREATE TABLE public.role
 (
   id SERIAL PRIMARY KEY NOT NULL,
+  code VARCHAR(20) NOT NULL,
   name VARCHAR(32) NOT NULL
 );
 
 CREATE TABLE public.account
 (
   id SERIAL PRIMARY KEY NOT NULL,
-  nickname VARCHAR(32) NOT NULL,
-  passhash VARCHAR(32) NOT NULL,
+  nickname VARCHAR(40) NOT NULL,
+  passhash VARCHAR(40) NOT NULL,
   role_id INT NOT NULL,
   CONSTRAINT account_role_id_fk FOREIGN KEY (role_id) REFERENCES role (id) ON UPDATE CASCADE
 );
@@ -17,7 +18,7 @@ CREATE UNIQUE INDEX account_nickname_uindex ON public.account (nickname);
 CREATE TABLE public.project
 (
   id SERIAL PRIMARY KEY NOT NULL,
-  name VARCHAR(32) NOT NULL,
+  name VARCHAR(40) NOT NULL,
   complete BOOLEAN NOT NULL,
   manager_id INT NOT NULL,
   CONSTRAINT project_account_id_fk FOREIGN KEY (manager_id) REFERENCES account (id) ON UPDATE CASCADE

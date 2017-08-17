@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +45,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public ResponseEntity createUser(@RequestBody SecureAccountDomain accountDomain) {
+    public ResponseEntity createUser(@RequestBody SecureAccountDomain accountDomain) throws NoSuchAlgorithmException {
+        accountDomain.encodePass();
         accountDAO.create(accountDomain);
         return new ResponseEntity(HttpStatus.OK);
     }

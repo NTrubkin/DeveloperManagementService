@@ -3,9 +3,11 @@ package com.company.dao;
 import com.company.domain.ProjectDomain;
 import com.company.entity.Account;
 import com.company.entity.Project;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 import java.io.Serializable;
 import java.util.List;
@@ -46,7 +48,10 @@ public class ProjectDAOImpl implements DAO<Project> {
 
     @Override
     public void update(Project project) {
-        throw new UnsupportedOperationException("not supported yet");
+        Session session = sessionFactory.getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+        session.update(project);
+        transaction.commit();
     }
 
     @Override
@@ -70,5 +75,26 @@ public class ProjectDAOImpl implements DAO<Project> {
         List<Project> projects = session.createCriteria(Project.class).list();
         transaction.commit();
         return projects;
+    }
+
+    public List<Project> readAll(int managerId) {
+        Session session = sessionFactory.getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+        Criteria criteria = session.createCriteria(Project.class);
+        criteria.add(Restrictions.sqlRestriction("manager_id = " + managerId));
+        List<Project> projects = criteria.list();
+        transaction.commit();
+        return projects;
+    }
+
+    public Project getCurrentProject(int managerId) {
+        Session session = sessionFactory.getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+        Criteria criteria = session.createCriteria(Project.class);
+        criteria.add(Restrictions.sqlRestriction("manager_id = " + managerId));
+        criteria.add(Restrictions.eq("complete", false));
+        Project project = (Project) criteria.uniqueResult();
+        transaction.commit();
+        return project;
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
@@ -24,15 +25,16 @@ public class UserController {
 
     //@todo расписать варианты кодов ошибок
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String getCurrentUser() {
-        //@todo реализовать, когда появится аутентификация
-        return "get cur user";
+    public ResponseEntity<AccountDomain> getCurrentUser(Authentication authentication) {
+        String auth = authentication.getName();
+        AccountDomain accountDomain = new AccountDomain(accountDAO.read(auth));
+        return new ResponseEntity<>(accountDomain, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<AccountDomain> getUser(@PathVariable int id) {
         Account account = accountDAO.read(id);
-        return new ResponseEntity(new AccountDomain(account), HttpStatus.OK);
+        return new ResponseEntity<>(new AccountDomain(account), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
@@ -41,7 +43,7 @@ public class UserController {
         for (Account account : accountDAO.readAll()) {
             accountDomains.add(new AccountDomain(account));
         }
-        return new ResponseEntity(accountDomains, HttpStatus.OK);
+        return new ResponseEntity<>(accountDomains, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)

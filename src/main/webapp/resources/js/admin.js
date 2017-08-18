@@ -1,12 +1,12 @@
 var prefix = '/developer-management-service-1.0-SNAPSHOT';
 
-var addAccount = function () {
+var createAccount = function () {
     var account = {
         'id': 0,
         'nickname': $("#nickname").val(),
         'roleId': document.getElementById("role").options[document.getElementById("role").selectedIndex].value,
         'passhash': $("#passhash").val()
-    }
+    };
     $.ajax({
         type: 'POST',
         url:  prefix + "/user/",
@@ -20,7 +20,7 @@ var addAccount = function () {
             alert(jqXHR.status + ' ' + jqXHR.responseText);
         }
     });
-}
+};
 
 function formAccountsTable() {
     $.ajax({

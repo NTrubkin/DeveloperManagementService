@@ -4,3 +4,5 @@
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
+N
+DeveloperManagementService.iml,d\7\d774e2be2bd4be9bdda43d40005d0d1134e5cf93

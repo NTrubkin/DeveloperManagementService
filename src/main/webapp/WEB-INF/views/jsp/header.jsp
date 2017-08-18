@@ -8,9 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<c:set var="req" value="${pageContext.request}" />
+<c:set var="req" value="${pageContext.request}"/>
 <c:set var="url">${req.requestURL}</c:set>
-<c:set var="uri" value="${req.requestURI}" />
+<c:set var="uri" value="${req.requestURI}"/>
 <html>
 <head>
     <style>
@@ -19,7 +19,7 @@
             background: #E0F7FA;
         }
 
-        #title{
+        #title {
             display: inline-block;
         }
 
@@ -30,14 +30,13 @@
 
         #login {
             display: inline-block;
-            margin-left:100;
+            margin-left: 100;
         }
 
-
-        #nav_bar li{
+        #nav_bar li {
             display: inline;
-            margin-left:5;
-            margin-right:5;
+            margin-left: 5;
+            margin-right: 5;
         }
 
         #nav_bar a {
@@ -50,13 +49,17 @@
     <div id="title">Developer Management Service</div>
     <div id="nav">
         <ul id="nav_bar">
-            <li><a href="${fn:substring(url, 0, fn:length(url) - fn:length(uri))}${req.contextPath}/admin" >Admin</a></li>
-            <li><a href="${fn:substring(url, 0, fn:length(url) - fn:length(uri))}${req.contextPath}/manager" >Manager</a></li>
-            <li><a href="${fn:substring(url, 0, fn:length(url) - fn:length(uri))}${req.contextPath}/developer" >Developer</a></li>
+            <li><a href="${fn:substring(url, 0, fn:length(url) - fn:length(uri))}${req.contextPath}/admin">Admin</a>
+            </li>
+            <li><a href="${fn:substring(url, 0, fn:length(url) - fn:length(uri))}${req.contextPath}/manager">Manager</a>
+            </li>
+            <li>
+                <a href="${fn:substring(url, 0, fn:length(url) - fn:length(uri))}${req.contextPath}/developer">Developer</a>
+            </li>
         </ul>
     </div>
     <div id="login">
-        <a href="${fn:substring(url, 0, fn:length(url) - fn:length(uri))}${req.contextPath}/login" >Login</a>
+        <a href="${fn:substring(url, 0, fn:length(url) - fn:length(uri))}${req.contextPath}/login">Login</a>
     </div>
 </header>
 </body>

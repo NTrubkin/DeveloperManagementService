@@ -64,13 +64,16 @@ function formCurrentProjectPanel() {
         async: true,
         success: function(result) {
             if(result.id == 0) {
-                document.getElementById('rightPanel').style.display = 'none';
+                document.getElementById('currentProjectPanel').style.display = 'none';
                 document.getElementById('createPanel').style.display = 'block';
             }
             else {
                 currentProjectId = result.id;
-                document.getElementById('rightPanel').style.display = 'block';
+                $('#projectId').append(result.id);
+                $('#projectName').append(result.name);
+                $('#projectComplete').append(result.complete.toString());
                 document.getElementById('createPanel').style.display = 'none';
+                document.getElementById('currentProjectPanel').style.display = 'block';
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {

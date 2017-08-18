@@ -24,9 +24,12 @@
         }
 
         #rightPanel {
-            display: none;
             float: right;
             width: 50%;
+        }
+
+        #currentProjectPanel {
+            display: none;
         }
 
         #createPanel {
@@ -40,18 +43,7 @@
 
 <div style="width: 100%;">
     <div id="leftPanel">
-
-        <div id="createPanel">
-            <h2>Create new project</h2>
-            <div>
-                <label>Name:</label>
-                <input type="text" id="name"/>
-                <button onclick="createProject()">Create</button>
-            </div>
-        </div>
-
         <h2>My project list</h2>
-
         <table id="projects">
             <tr>
                 <th width="20">ID</th>
@@ -62,45 +54,55 @@
     </div>
 
     <div id="rightPanel">
-        <h2>Current project</h2>
-        <p>ID: 12</p>
-        <p>Name: project_12</p>
-        <p>Complete: false</p>
-        <button onclick="completeCurrentProject()">Complete project</button>
-        <h3>Developers in the project</h3>
-        <table id="devs">
-            <tr>
-                <th width="20">ID</th>
-                <th width="100">Nickname</th>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Alex</td>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Ben</td>
-                </td>
-            </tr>
-        </table>
-        <h3>Available developers</h3>
-        <table id="avDevs">
-            <tr>
-                <th width="20">ID</th>
-                <th width="100">Nickname</th>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Charlie</td>
-                </td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>Donald</td>
-                </td>
-            </tr>
-        </table>
+        <div id="createPanel">
+            <h2>Create new project</h2>
+            <div>
+                <label>Name:</label>
+                <input type="text" id="name"/>
+                <button onclick="createProject()">Create</button>
+            </div>
+        </div>
+        <div id="currentProjectPanel">
+            <h2>Current project</h2>
+            <p id="projectId">ID: </p>
+            <p id="projectName">Name: </p>
+            <p id="projectComplete">Complete: </p>
+            <button onclick="completeCurrentProject()">Complete project</button>
+            <h3>Developers in the project</h3>
+            <table id="devs">
+                <tr>
+                    <th width="20">ID</th>
+                    <th width="100">Nickname</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Alex</td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Ben</td>
+                    </td>
+                </tr>
+            </table>
+            <h3>Available developers</h3>
+            <table id="avDevs">
+                <tr>
+                    <th width="20">ID</th>
+                    <th width="100">Nickname</th>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Charlie</td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Donald</td>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>
 

@@ -26,8 +26,9 @@ CREATE TABLE public.project
 
 CREATE TABLE public.developer
 (
+  id SERIAL PRIMARY KEY NOT NULL,
   account_id INT NOT NULL,
-  project_id INT PRIMARY KEY NOT NULL,
+  project_id INT NOT NULL,
   CONSTRAINT developer_account_id_fk FOREIGN KEY (account_id) REFERENCES account (id) ON UPDATE CASCADE,
   CONSTRAINT developer_project_id_fk FOREIGN KEY (project_id) REFERENCES project (id) ON UPDATE CASCADE
 );

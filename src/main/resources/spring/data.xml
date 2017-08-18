@@ -17,6 +17,10 @@
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
     </bean>
 
+    <bean id="developerDAO" class="com.company.dao.DeveloperDaoImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
+    </bean>
+
     <!-- Hibernate 4 SessionFactory Bean definition -->
     <bean id="hibernate4AnnotatedSessionFactory"
           class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
@@ -26,6 +30,7 @@
                 <value>com.company.entity.Account</value>
                 <value>com.company.entity.Project</value>
                 <value>com.company.entity.Role</value>
+                <value>com.company.entity.Developer</value>
             </list>
         </property>
         <property name="hibernateProperties">

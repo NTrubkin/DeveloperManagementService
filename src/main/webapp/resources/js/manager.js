@@ -72,6 +72,8 @@ function formCurrentProjectPanel() {
                 $('#projectId').append(result.id);
                 $('#projectName').append(result.name);
                 $('#projectComplete').append(result.complete.toString());
+                formProjectDevelopersTable();
+                formAvailableDevelopersTable();
                 document.getElementById('createPanel').style.display = 'none';
                 document.getElementById('currentProjectPanel').style.display = 'block';
             }
@@ -96,4 +98,46 @@ function completeCurrentProject() {
             }
         });
     }
+}
+
+function formProjectDevelopersTable() {
+    $.ajax({
+        type: 'GET',
+        url:  prefix + '/project/' + currentProjectId + '/dev/all',
+        dataType: 'json',
+        async: true,
+        success: function(result) {
+            formProjectDevelopersTableFromJson(result, 'devs');
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert(jqXHR.status + ' ' + jqXHR.responseText);
+        }
+    });
+}
+
+function formAvailableDevelopersTable() {
+    $.ajax({
+        type: 'GET',
+        url:  prefix + '/project/dev/avail',
+        dataType: 'json',
+        async: true,
+        success: function(result) {
+            formProjectDevelopersTableFromJson(result, 'avDevs');
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert(jqXHR.status + ' ' + jqXHR.responseText);
+        }
+    });
+}
+
+function formProjectDevelopersTableFromJson(json, tableId) {
+    $(document).ready(function () {
+        var tr;
+        for (var i = 0; i < json.length; i++) {
+            tr = $('<tr/>');
+            tr.append("<td>" + json[i].id + "</td>");
+            tr.append("<td>" + json[i].nickname + "</td>");
+            $('#' + tableId).append(tr);
+        }
+    });
 }

@@ -74,32 +74,12 @@
                     <th width="20">ID</th>
                     <th width="100">Nickname</th>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Alex</td>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Ben</td>
-                    </td>
-                </tr>
             </table>
             <h3>Available developers</h3>
             <table id="avDevs">
                 <tr>
                     <th width="20">ID</th>
                     <th width="100">Nickname</th>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Charlie</td>
-                    </td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>Donald</td>
-                    </td>
                 </tr>
             </table>
         </div>

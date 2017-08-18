@@ -1,8 +1,12 @@
 package com.company.controller.rest;
 
 import com.company.dao.AccountDAOImpl;
+import com.company.dao.DeveloperDaoImpl;
 import com.company.dao.ProjectDAOImpl;
+import com.company.domain.AccountDomain;
 import com.company.domain.ProjectDomain;
+import com.company.entity.Account;
+import com.company.entity.Developer;
 import com.company.entity.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,6 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/project")
 public class ProjectController {
+    //@todo уточнить везде id
 
     @Autowired
     @Qualifier("projectDAO")
@@ -26,9 +31,12 @@ public class ProjectController {
     @Qualifier("accountDAO")
     AccountDAOImpl accountDAO;
 
+    @Autowired
+    @Qualifier("developerDAO")
+    DeveloperDaoImpl developerDAO;
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseEntity<ProjectDomain> getCurrentProject(Authentication authentication) {
-        //@todo реализовать, когда появится аутентификация
         String auth = authentication.getName();
         int authId = accountDAO.read(auth).getId();
         Project project = projectDAO.getCurrentProject(authId);
@@ -77,18 +85,6 @@ public class ProjectController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/current/{id}", method = RequestMethod.POST)
-    public String addDeveloperToCurrentProject(@PathVariable int id) {
-        //@todo реализовать, когда появится аутентификация
-        return "add developer " + id + " to current project";
-    }
-
-    @RequestMapping(value = "/current/{id}", method = RequestMethod.DELETE)
-    public String removeDeveloperFromCurrentProject(@PathVariable int id) {
-        //@todo реализовать, когда появится аутентификация
-        return "remove developer " + id + " from current project";
-    }
-
     @RequestMapping(value = "/{id}/active", method = RequestMethod.PUT)
     public String setCurrentProjectActive() {
         //@todo реализовать, когда появится аутентификация
@@ -97,7 +93,6 @@ public class ProjectController {
 
     @RequestMapping(value = "/current/complete", method = RequestMethod.PUT)
     public ResponseEntity setCurrentProjectComplete(Authentication authentication) {
-        //@todo реализовать, когда появится аутентификация
         String auth = authentication.getName();
         int authId = accountDAO.read(auth).getId();
         Project project = projectDAO.getCurrentProject(authId);
@@ -109,5 +104,51 @@ public class ProjectController {
             projectDAO.update(project);
             return new ResponseEntity(HttpStatus.OK);
         }
+    }
+
+    @RequestMapping(value = "/{projectId}/dev/{developerId}", method = RequestMethod.POST)
+    public ResponseEntity addDeveloperToCurrentProject(@PathVariable int projectId, @PathVariable int developerId, Authentication authentication) {
+        //@todo реализовать, когда появится аутентификация
+        //@todo проверить роль разработчика
+        //@todo проверить авторство
+        Project project = projectDAO.read(projectId);
+        if (project == null) {
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
+        }
+        Account account = accountDAO.read(developerId);
+        if(account == null) {
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
+        }
+
+        Developer developer = new Developer(account, project);
+        developerDAO.create(developer);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{projectId}/dev/{developerId}", method = RequestMethod.DELETE)
+    public ResponseEntity removeDeveloperFromCurrentProject(@PathVariable int projectId, @PathVariable int developerId, Authentication authentication) {
+        //@todo проверить роль разработчика
+        //@todo проверить авторство
+        developerDAO.delete(projectId, developerId);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{id}/dev/all", method = RequestMethod.GET)
+    public ResponseEntity<List<AccountDomain>> getDevelopersInProject(@PathVariable int id) {
+        List<AccountDomain> devs = new ArrayList<>();
+        for(Developer developer : developerDAO.readAll(id)) {
+            devs.add(new AccountDomain(developer.getAccount()));
+        }
+        return new ResponseEntity<>(devs, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/dev/avail", method = RequestMethod.GET)
+    public ResponseEntity<List<AccountDomain>> getAvailableDevelopers() {
+        List<AccountDomain> devs = new ArrayList<>();
+        for(Account account : developerDAO.readAllAvailable()) {
+            devs.add(new AccountDomain(account));
+        }
+        return new ResponseEntity<>(devs, HttpStatus.OK);
     }
 }

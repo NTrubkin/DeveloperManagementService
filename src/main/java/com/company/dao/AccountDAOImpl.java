@@ -3,9 +3,11 @@ package com.company.dao;
 import com.company.domain.SecureAccountDomain;
 import com.company.entity.Account;
 import com.company.entity.Role;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
@@ -44,6 +46,16 @@ public class AccountDAOImpl implements DAO<Account> {
         Session session = sessionFactory.getCurrentSession();
         Transaction transaction = session.beginTransaction();
         Account account = (Account) session.get(Account.class, id);
+        transaction.commit();
+        return account;
+    }
+
+    public Account read(String nickname) {
+        Session session = sessionFactory.getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+        Criteria criteria = session.createCriteria(Account.class);
+        criteria.add(Restrictions.eq("nickname", nickname));
+        Account account = (Account) criteria.uniqueResult();
         transaction.commit();
         return account;
     }

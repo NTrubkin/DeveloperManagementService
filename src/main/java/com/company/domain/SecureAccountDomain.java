@@ -1,6 +1,9 @@
 package com.company.domain;
 
 import com.company.entity.Account;
+import com.company.util.HashGenerator;
+
+import java.security.NoSuchAlgorithmException;
 
 public class SecureAccountDomain extends AccountDomain {
 
@@ -26,5 +29,9 @@ public class SecureAccountDomain extends AccountDomain {
 
     public void setPasshash(String passhash) {
         this.passhash = passhash;
+    }
+
+    public void encodePass() throws NoSuchAlgorithmException {
+        passhash = HashGenerator.generateSHA1(passhash);
     }
 }

@@ -22,10 +22,12 @@ public class ProjectDomain {
     }
 
     public ProjectDomain(Project project) {
-        this.id = project.getId();
-        this.name = project.getName();
-        this.complete = project.isComplete();
-        this.managerId = project.getManager().getId();
+        if(project != null) {
+            this.id = project.getId();
+            this.name = project.getName();
+            this.complete = project.isComplete();
+            this.managerId = project.getManager().getId();
+        }
     }
 
     public int getId() {

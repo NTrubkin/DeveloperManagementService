@@ -51,7 +51,24 @@ function formProjectsTableFromJson(json) {
             tr.append("<td>" + json[i].id + "</td>");
             tr.append("<td>" + json[i].name + "</td>");
             tr.append("<td>" + json[i].complete + "</td>");
+            if(currentProjectId === 0) {
+                tr.append("<td><a href='#' onclick='reopen(" + json[i].id +");return false;'>reopen</a></td>");
+            }
             $('#projects').append(tr);
+        }
+    });
+}
+
+function reopen(id) {
+    $.ajax({
+        type: 'PUT',
+        url:  prefix + '/project/' + id + '/active',
+        async: true,
+        success: function() {
+            window.location.reload();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert(jqXHR.status + ' ' + jqXHR.responseText);
         }
     });
 }
@@ -107,7 +124,7 @@ function formProjectDevelopersTable() {
         dataType: 'json',
         async: true,
         success: function(result) {
-            formProjectDevelopersTableFromJson(result, 'devs');
+            formProjectDevelopersTableFromJson(result, 'devs', 'removeFromCurrentProject', 'remove');
         },
         error: function(jqXHR, textStatus, errorThrown) {
             alert(jqXHR.status + ' ' + jqXHR.responseText);
@@ -122,7 +139,7 @@ function formAvailableDevelopersTable() {
         dataType: 'json',
         async: true,
         success: function(result) {
-            formProjectDevelopersTableFromJson(result, 'avDevs');
+            formProjectDevelopersTableFromJson(result, 'avDevs', 'addToCurrentProject', 'add');
         },
         error: function(jqXHR, textStatus, errorThrown) {
             alert(jqXHR.status + ' ' + jqXHR.responseText);
@@ -130,14 +147,44 @@ function formAvailableDevelopersTable() {
     });
 }
 
-function formProjectDevelopersTableFromJson(json, tableId) {
+function formProjectDevelopersTableFromJson(json, tableId, action, label) {
     $(document).ready(function () {
         var tr;
         for (var i = 0; i < json.length; i++) {
             tr = $('<tr/>');
             tr.append("<td>" + json[i].id + "</td>");
             tr.append("<td>" + json[i].nickname + "</td>");
+            tr.append("<td><a href='#' onclick='" + action + "(" + json[i].id +");return false;'>" + label + "</a></td>");
+
             $('#' + tableId).append(tr);
+        }
+    });
+}
+
+function addToCurrentProject(devId) {
+    $.ajax({
+        type: 'POST',
+        url:  prefix + '/project/' + currentProjectId + '/dev/' + devId,
+        async: true,
+        success: function() {
+            window.location.reload();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert(jqXHR.status + ' ' + jqXHR.responseText);
+        }
+    });
+}
+
+function removeFromCurrentProject(devId) {
+    $.ajax({
+        type: 'DELETE',
+        url:  prefix + '/project/' + currentProjectId + '/dev/' + devId,
+        async: true,
+        success: function() {
+            window.location.reload();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert(jqXHR.status + ' ' + jqXHR.responseText);
         }
     });
 }

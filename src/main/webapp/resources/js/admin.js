@@ -45,7 +45,7 @@ function formAccountsTableFromJson(json) {
             tr.append("<td>" + json[i].id + "</td>");
             tr.append("<td>" + json[i].nickname + "</td>");
             tr.append("<td>" + roleCodeToType(json[i].roleId) + "</td>");
-            tr.append("<td><a href=\"javascript:deleteAccount(" + json[i].id + ")\">X</a></td>");
+            tr.append("<td><a href='#' onclick='deleteAccount(" + json[i].id +");return false;'>X</a></td>");
             $('#accounts').append(tr);
         }
     });

@@ -31,9 +31,9 @@ public class UserController {
         return new ResponseEntity<>(accountDomain, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<AccountDomain> getUser(@PathVariable int id) {
-        Account account = accountDAO.read(id);
+    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
+    public ResponseEntity<AccountDomain> getUser(@PathVariable int userId) {
+        Account account = accountDAO.read(userId);
         return new ResponseEntity<>(new AccountDomain(account), HttpStatus.OK);
     }
 
@@ -53,9 +53,9 @@ public class UserController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity deleteUser(@PathVariable int id) {
-        accountDAO.delete(id);
+    @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
+    public ResponseEntity deleteUser(@PathVariable int userId) {
+        accountDAO.delete(userId);
         return new ResponseEntity(HttpStatus.OK);
     }
 }

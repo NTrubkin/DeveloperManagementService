@@ -24,8 +24,8 @@ var createProject = function () {
 };
 
 function init() {
-    formProjectsTable();
     formCurrentProjectPanel();
+    formProjectsTable();
 }
 
 function formProjectsTable() {
@@ -80,7 +80,7 @@ function formCurrentProjectPanel() {
         dataType: 'json',
         async: true,
         success: function(result) {
-            if(result.id == 0) {
+            if(result.id === 0) {
                 document.getElementById('currentProjectPanel').style.display = 'none';
                 document.getElementById('createPanel').style.display = 'block';
             }

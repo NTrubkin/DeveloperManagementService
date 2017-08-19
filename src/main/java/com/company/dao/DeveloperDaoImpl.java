@@ -2,7 +2,6 @@ package com.company.dao;
 
 import com.company.entity.Account;
 import com.company.entity.Developer;
-import com.company.entity.Project;
 import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
 

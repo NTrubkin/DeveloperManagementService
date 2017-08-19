@@ -21,8 +21,6 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/project")
 public class ProjectController {
-    //@todo уточнить везде id
-
     @Autowired
     @Qualifier("projectDAO")
     ProjectDAOImpl projectDAO;
@@ -43,9 +41,9 @@ public class ProjectController {
         return new ResponseEntity<>(new ProjectDomain(project), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<ProjectDomain> getProject(@PathVariable int id) {
-        Project project = projectDAO.read(id);
+    @RequestMapping(value = "/{projectId}", method = RequestMethod.GET)
+    public ResponseEntity<ProjectDomain> getProject(@PathVariable int projectId) {
+        Project project = projectDAO.read(projectId);
         return new ResponseEntity<>(new ProjectDomain(project), HttpStatus.OK);
     }
 
@@ -78,17 +76,24 @@ public class ProjectController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity deleteProject(@PathVariable int id) {
+    @RequestMapping(value = "/{projectId}", method = RequestMethod.DELETE)
+    public ResponseEntity deleteProject(@PathVariable int projectId) {
         // @todo проверка на авторство
-        projectDAO.delete(id);
+        projectDAO.delete(projectId);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}/active", method = RequestMethod.PUT)
-    public String setCurrentProjectActive() {
-        //@todo реализовать, когда появится аутентификация
-        return "set current project active";
+    @RequestMapping(value = "/{projectId}/active", method = RequestMethod.PUT)
+    public ResponseEntity setCurrentProjectActive(@PathVariable int projectId, Authentication authentication) {
+        Project project = projectDAO.read(projectId);
+        if (project == null) {
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
+        }
+        else {
+            project.setComplete(false);
+            projectDAO.update(project);
+            return new ResponseEntity(HttpStatus.OK);
+        }
     }
 
     @RequestMapping(value = "/current/complete", method = RequestMethod.PUT)
@@ -134,10 +139,10 @@ public class ProjectController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}/dev/all", method = RequestMethod.GET)
-    public ResponseEntity<List<AccountDomain>> getDevelopersInProject(@PathVariable int id) {
+    @RequestMapping(value = "/{projectId}/dev/all", method = RequestMethod.GET)
+    public ResponseEntity<List<AccountDomain>> getDevelopersInProject(@PathVariable int projectId) {
         List<AccountDomain> devs = new ArrayList<>();
-        for(Developer developer : developerDAO.readAll(id)) {
+        for(Developer developer : developerDAO.readAll(projectId)) {
             devs.add(new AccountDomain(developer.getAccount()));
         }
         return new ResponseEntity<>(devs, HttpStatus.OK);

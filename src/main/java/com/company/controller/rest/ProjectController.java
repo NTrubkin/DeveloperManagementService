@@ -1,8 +1,6 @@
 package com.company.controller.rest;
 
-import com.company.dao.AccountDAOImpl;
-import com.company.dao.DeveloperDaoImpl;
-import com.company.dao.ProjectDAOImpl;
+import com.company.dao.*;
 import com.company.domain.AccountDomain;
 import com.company.domain.ProjectDomain;
 import com.company.entity.Account;
@@ -23,15 +21,15 @@ import java.util.List;
 public class ProjectController {
     @Autowired
     @Qualifier("projectDAO")
-    ProjectDAOImpl projectDAO;
+    ProjectDAO projectDAO;
 
     @Autowired
     @Qualifier("accountDAO")
-    AccountDAOImpl accountDAO;
+    AccountDAO accountDAO;
 
     @Autowired
     @Qualifier("developerDAO")
-    DeveloperDaoImpl developerDAO;
+    DeveloperDAO developerDAO;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseEntity<ProjectDomain> getCurrentProject(Authentication authentication) {

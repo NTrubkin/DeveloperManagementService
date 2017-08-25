@@ -1,6 +1,6 @@
 package com.company.controller.rest;
 
-import com.company.dao.AccountDAOImpl;
+import com.company.dao.AccountDAO;
 import com.company.domain.AccountDomain;
 import com.company.domain.SecureAccountDomain;
 import com.company.entity.Account;
@@ -21,7 +21,7 @@ public class AccountController {
 
     @Autowired
     @Qualifier("accountDAO")
-    AccountDAOImpl accountDAO;
+    AccountDAO accountDAO;
 
     //@todo расписать варианты кодов ошибок
     @RequestMapping(value = "/", method = RequestMethod.GET)

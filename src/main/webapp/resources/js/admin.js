@@ -5,11 +5,11 @@ var createAccount = function () {
         'id': 0,
         'nickname': $("#nickname").val(),
         'roleId': document.getElementById("role").options[document.getElementById("role").selectedIndex].value,
-        'passhash': $("#passhash").val()
+        'passhash': $("#password").val()
     };
     $.ajax({
         type: 'POST',
-        url:  prefix + "/user/",
+        url:  prefix + "/account/",
         contentType: 'application/json; charset=utf-8',
         async: true,
         data: JSON.stringify(account),
@@ -25,7 +25,7 @@ var createAccount = function () {
 function formAccountsTable() {
     $.ajax({
         type: 'GET',
-        url:  prefix + '/user/all/',
+        url:  prefix + '/account/all/',
         dataType: 'json',
         async: true,
         success: function(result) {
@@ -38,7 +38,6 @@ function formAccountsTable() {
 }
 
 function formAccountsTableFromJson(json) {
-    $(document).ready(function () {
         var tr;
         for (var i = 0; i < json.length; i++) {
             tr = $('<tr/>');
@@ -48,13 +47,12 @@ function formAccountsTableFromJson(json) {
             tr.append("<td><a href='#' onclick='deleteAccount(" + json[i].id +");return false;'>X</a></td>");
             $('#accounts').append(tr);
         }
-    });
 }
 
 function deleteAccount(id) {
     $.ajax({
         type: 'DELETE',
-        url:  prefix + '/user/' + id,
+        url:  prefix + '/account/' + id,
         async: true,
         success: function(result) {
             window.location.reload();

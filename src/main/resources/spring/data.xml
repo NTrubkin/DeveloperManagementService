@@ -38,6 +38,7 @@
                 <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQL9Dialect</prop>
                 <prop key="hibernate.current_session_context_class">thread</prop>
                 <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.temp.use_jdbc_metadata_defaults">false</prop>
             </props>
         </property>
     </bean>

@@ -21,9 +21,9 @@
 <h2>Create account</h2>
 <div>
     <label>Nickname:</label>
-    <input type="text" id="nickname"/>
-    <label>Passhash:</label>
-    <input type="password" id="passhash"/>
+    <input id="nickname"/>
+    <label>Password:</label>
+    <input type="password" id="password"/>
     <label>Role:</label>
     <select id="role">
         <option value="1">Administrator</option>

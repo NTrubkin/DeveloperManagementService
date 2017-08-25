@@ -1,8 +1,6 @@
 package com.company.controller.rest;
 
-import com.company.dao.AccountDAOImpl;
-import com.company.dao.DeveloperDaoImpl;
-import com.company.dao.ProjectDAOImpl;
+import com.company.dao.*;
 import com.company.domain.AccountDomain;
 import com.company.domain.ProjectDomain;
 import com.company.entity.Account;
@@ -21,35 +19,44 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/project")
 public class ProjectController {
-    //@todo уточнить везде id
-
     @Autowired
     @Qualifier("projectDAO")
-    ProjectDAOImpl projectDAO;
+    ProjectDAO projectDAO;
 
     @Autowired
     @Qualifier("accountDAO")
-    AccountDAOImpl accountDAO;
+    AccountDAO accountDAO;
 
     @Autowired
     @Qualifier("developerDAO")
-    DeveloperDaoImpl developerDAO;
+    DeveloperDAO developerDAO;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseEntity<ProjectDomain> getCurrentProject(Authentication authentication) {
         String auth = authentication.getName();
-        int authId = accountDAO.read(auth).getId();
-        Project project = projectDAO.getCurrentProject(authId);
+        Account account = accountDAO.read(auth);
+        int authId = account.getId();
+
+        switch (account.getRole().getCode()) {
+            case "ROLE_MANAGER": {
+                Project project = projectDAO.getCurrentManagerProject(authId);
+                return new ResponseEntity<>(new ProjectDomain(project), HttpStatus.OK);
+            }
+            case "ROLE_DEV": {
+                Project project = projectDAO.getCurrentDeveloperProject(authId);
+                return new ResponseEntity<>(new ProjectDomain(project), HttpStatus.OK);
+            }
+            default:
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @RequestMapping(value = "/{projectId}", method = RequestMethod.GET)
+    public ResponseEntity<ProjectDomain> getProject(@PathVariable int projectId) {
+        Project project = projectDAO.read(projectId);
         return new ResponseEntity<>(new ProjectDomain(project), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<ProjectDomain> getProject(@PathVariable int id) {
-        Project project = projectDAO.read(id);
-        return new ResponseEntity<>(new ProjectDomain(project), HttpStatus.OK);
-    }
-
-/*    //unsafe
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ResponseEntity<List<ProjectDomain>> getAllProjects() {
         List<ProjectDomain> projectDomains = new ArrayList<>();
@@ -57,17 +64,29 @@ public class ProjectController {
             projectDomains.add(new ProjectDomain(project));
         }
         return new ResponseEntity<>(projectDomains, HttpStatus.OK);
-    }*/
+    }
 
     @RequestMapping(value = "/all_my", method = RequestMethod.GET)
     public ResponseEntity<List<ProjectDomain>> getAllMyProjects(Authentication authentication) {
         String auth = authentication.getName();
-        int authId = accountDAO.read(auth).getId();
+        Account account = accountDAO.read(auth);
+        int authId = account.getId();
         List<ProjectDomain> projectDomains = new ArrayList<>();
-        for (Project project : projectDAO.readAll(authId)) {
-            projectDomains.add(new ProjectDomain(project));
+
+        switch (account.getRole().getCode()) {
+            case "ROLE_MANAGER":
+                for (Project project : projectDAO.readAllManagerProjects(authId)) {
+                    projectDomains.add(new ProjectDomain(project));
+                }
+                return new ResponseEntity<>(projectDomains, HttpStatus.OK);
+            case "ROLE_DEV":
+                for (Project project : projectDAO.readAllDeveloperProjects(authId)) {
+                    projectDomains.add(new ProjectDomain(project));
+                }
+                return new ResponseEntity<>(projectDomains, HttpStatus.OK);
+            default:
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        return new ResponseEntity<>(projectDomains, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
@@ -78,24 +97,31 @@ public class ProjectController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity deleteProject(@PathVariable int id) {
-        // @todo проверка на авторство
-        projectDAO.delete(id);
+    @RequestMapping(value = "/{projectId}", method = RequestMethod.DELETE)
+    public ResponseEntity deleteProject(@PathVariable int projectId) {
+        projectDAO.delete(projectId);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}/active", method = RequestMethod.PUT)
-    public String setCurrentProjectActive() {
-        //@todo реализовать, когда появится аутентификация
-        return "set current project active";
+    @RequestMapping(value = "/{projectId}/active", method = RequestMethod.PUT)
+    public ResponseEntity setCurrentProjectActive(@PathVariable int projectId) {
+        Project project = projectDAO.read(projectId);
+        if (project == null) {
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
+        }
+        else {
+            developerDAO.deleteAllProjectDevelopers(projectId);
+            project.setComplete(false);
+            projectDAO.update(project);
+            return new ResponseEntity(HttpStatus.OK);
+        }
     }
 
     @RequestMapping(value = "/current/complete", method = RequestMethod.PUT)
     public ResponseEntity setCurrentProjectComplete(Authentication authentication) {
         String auth = authentication.getName();
         int authId = accountDAO.read(auth).getId();
-        Project project = projectDAO.getCurrentProject(authId);
+        Project project = projectDAO.getCurrentManagerProject(authId);
         if (project == null) {
             return new ResponseEntity(HttpStatus.FORBIDDEN);
         }
@@ -107,10 +133,7 @@ public class ProjectController {
     }
 
     @RequestMapping(value = "/{projectId}/dev/{developerId}", method = RequestMethod.POST)
-    public ResponseEntity addDeveloperToCurrentProject(@PathVariable int projectId, @PathVariable int developerId, Authentication authentication) {
-        //@todo реализовать, когда появится аутентификация
-        //@todo проверить роль разработчика
-        //@todo проверить авторство
+    public ResponseEntity addDeveloperToCurrentProject(@PathVariable int projectId, @PathVariable int developerId) {
         Project project = projectDAO.read(projectId);
         if (project == null) {
             return new ResponseEntity(HttpStatus.FORBIDDEN);
@@ -127,17 +150,15 @@ public class ProjectController {
     }
 
     @RequestMapping(value = "/{projectId}/dev/{developerId}", method = RequestMethod.DELETE)
-    public ResponseEntity removeDeveloperFromCurrentProject(@PathVariable int projectId, @PathVariable int developerId, Authentication authentication) {
-        //@todo проверить роль разработчика
-        //@todo проверить авторство
+    public ResponseEntity removeDeveloperFromCurrentProject(@PathVariable int projectId, @PathVariable int developerId) {
         developerDAO.delete(projectId, developerId);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}/dev/all", method = RequestMethod.GET)
-    public ResponseEntity<List<AccountDomain>> getDevelopersInProject(@PathVariable int id) {
+    @RequestMapping(value = "/{projectId}/dev/all", method = RequestMethod.GET)
+    public ResponseEntity<List<AccountDomain>> getDevelopersInProject(@PathVariable int projectId) {
         List<AccountDomain> devs = new ArrayList<>();
-        for(Developer developer : developerDAO.readAll(id)) {
+        for(Developer developer : developerDAO.readAll(projectId)) {
             devs.add(new AccountDomain(developer.getAccount()));
         }
         return new ResponseEntity<>(devs, HttpStatus.OK);

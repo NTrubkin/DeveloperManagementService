@@ -24,8 +24,8 @@ var createProject = function () {
 };
 
 function init() {
-    formProjectsTable();
     formCurrentProjectPanel();
+    formProjectsTable();
 }
 
 function formProjectsTable() {
@@ -44,7 +44,6 @@ function formProjectsTable() {
 }
 
 function formProjectsTableFromJson(json) {
-    $(document).ready(function () {
         var tr;
         for (var i = 0; i < json.length; i++) {
             tr = $('<tr/>');
@@ -56,7 +55,6 @@ function formProjectsTableFromJson(json) {
             }
             $('#projects').append(tr);
         }
-    });
 }
 
 function reopen(id) {
@@ -80,7 +78,7 @@ function formCurrentProjectPanel() {
         dataType: 'json',
         async: true,
         success: function(result) {
-            if(result.id == 0) {
+            if(result.id === 0) {
                 document.getElementById('currentProjectPanel').style.display = 'none';
                 document.getElementById('createPanel').style.display = 'block';
             }
@@ -148,7 +146,6 @@ function formAvailableDevelopersTable() {
 }
 
 function formProjectDevelopersTableFromJson(json, tableId, action, label) {
-    $(document).ready(function () {
         var tr;
         for (var i = 0; i < json.length; i++) {
             tr = $('<tr/>');
@@ -158,7 +155,6 @@ function formProjectDevelopersTableFromJson(json, tableId, action, label) {
 
             $('#' + tableId).append(tr);
         }
-    });
 }
 
 function addToCurrentProject(devId) {

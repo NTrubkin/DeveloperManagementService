@@ -24,9 +24,6 @@ public class Account {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    /**
-     * Пустой конструктор для hibernate
-     */
     public Account() {
     }
 

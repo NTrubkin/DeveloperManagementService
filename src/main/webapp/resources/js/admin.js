@@ -38,7 +38,6 @@ function formAccountsTable() {
 }
 
 function formAccountsTableFromJson(json) {
-    $(document).ready(function () {
         var tr;
         for (var i = 0; i < json.length; i++) {
             tr = $('<tr/>');
@@ -48,7 +47,6 @@ function formAccountsTableFromJson(json) {
             tr.append("<td><a href='#' onclick='deleteAccount(" + json[i].id +");return false;'>X</a></td>");
             $('#accounts').append(tr);
         }
-    });
 }
 
 function deleteAccount(id) {

@@ -46,7 +46,6 @@ function formAllProjectsTable() {
 }
 
 function formProjectsTableFromJson(json) {
-    $(document).ready(function () {
         var tr;
         for (var i = 0; i < json.length; i++) {
             tr = $('<tr/>');
@@ -55,5 +54,4 @@ function formProjectsTableFromJson(json) {
             tr.append("<td>" + json[i].complete + "</td>");
             $('#projects').append(tr);
         }
-    });
 }

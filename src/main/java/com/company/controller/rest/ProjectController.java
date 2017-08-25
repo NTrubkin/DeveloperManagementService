@@ -112,6 +112,7 @@ public class ProjectController {
             return new ResponseEntity(HttpStatus.FORBIDDEN);
         }
         else {
+            developerDAO.deleteAllProjectDevelopers(projectId);
             project.setComplete(false);
             projectDAO.update(project);
             return new ResponseEntity(HttpStatus.OK);

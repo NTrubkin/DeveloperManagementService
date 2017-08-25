@@ -16,6 +16,7 @@ public class DeveloperDaoImpl implements DAO<Developer> {
             "WHERE id NOT IN (SELECT DISTINCT d.account_id\n" +
             "                 FROM developer d INNER JOIN project p ON d.project_id = p.id\n" +
             "                 WHERE p.complete = FALSE ) AND role_id = (SELECT id FROM role WHERE code = 'ROLE_DEV')";
+    private static final String SQL_DELETE = "DELETE FROM developer WHERE project_id = :id";
 
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -71,6 +72,18 @@ public class DeveloperDaoImpl implements DAO<Developer> {
         criteria.add(Restrictions.sqlRestriction("account_id = " + developerId));
         Developer developer = (Developer) criteria.uniqueResult();
         session.delete(developer);
+        transaction.commit();
+        session.close();
+    }
+
+    public void deleteAllProjectDevelopers(Serializable projectId) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        SQLQuery query = session.createSQLQuery(SQL_DELETE);
+        query.setParameter("id", projectId);
+        query.executeUpdate();
+
         transaction.commit();
         session.close();
     }

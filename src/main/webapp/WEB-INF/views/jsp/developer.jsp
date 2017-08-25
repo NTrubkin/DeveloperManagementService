@@ -37,7 +37,7 @@
         <p id="projectName">Name: </p>
         <p id="projectComplete">Complete: </p>
     </div>
-    <h2>Completed projects</h2>
+    <h2>All projects</h2>
     <table id="projects">
         <tr>
             <th width="20">ID</th>

@@ -9,7 +9,7 @@ var createAccount = function () {
     };
     $.ajax({
         type: 'POST',
-        url:  prefix + "/user/",
+        url:  prefix + "/account/",
         contentType: 'application/json; charset=utf-8',
         async: true,
         data: JSON.stringify(account),
@@ -25,7 +25,7 @@ var createAccount = function () {
 function formAccountsTable() {
     $.ajax({
         type: 'GET',
-        url:  prefix + '/user/all/',
+        url:  prefix + '/account/all/',
         dataType: 'json',
         async: true,
         success: function(result) {
@@ -54,7 +54,7 @@ function formAccountsTableFromJson(json) {
 function deleteAccount(id) {
     $.ajax({
         type: 'DELETE',
-        url:  prefix + '/user/' + id,
+        url:  prefix + '/account/' + id,
         async: true,
         success: function(result) {
             window.location.reload();

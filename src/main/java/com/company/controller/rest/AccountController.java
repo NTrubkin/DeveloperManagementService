@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/user")
-public class UserController {
+@RequestMapping(value = "/account")
+public class AccountController {
 
     @Autowired
     @Qualifier("accountDAO")
@@ -25,20 +25,20 @@ public class UserController {
 
     //@todo расписать варианты кодов ошибок
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ResponseEntity<AccountDomain> getCurrentUser(Authentication authentication) {
+    public ResponseEntity<AccountDomain> getCurrentAccount(Authentication authentication) {
         String auth = authentication.getName();
         AccountDomain accountDomain = new AccountDomain(accountDAO.read(auth));
         return new ResponseEntity<>(accountDomain, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-    public ResponseEntity<AccountDomain> getUser(@PathVariable int userId) {
-        Account account = accountDAO.read(userId);
+    @RequestMapping(value = "/{accountId}", method = RequestMethod.GET)
+    public ResponseEntity<AccountDomain> getAccount(@PathVariable int accountId) {
+        Account account = accountDAO.read(accountId);
         return new ResponseEntity<>(new AccountDomain(account), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public ResponseEntity<List<AccountDomain>> getAllUsers() {
+    public ResponseEntity<List<AccountDomain>> getAllAccounts() {
         List<AccountDomain> accountDomains = new ArrayList<>();
         for (Account account : accountDAO.readAll()) {
             accountDomains.add(new AccountDomain(account));
@@ -47,15 +47,15 @@ public class UserController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public ResponseEntity createUser(@RequestBody SecureAccountDomain accountDomain) throws NoSuchAlgorithmException {
+    public ResponseEntity createAccount(@RequestBody SecureAccountDomain accountDomain) throws NoSuchAlgorithmException {
         accountDomain.encodePass();
         accountDAO.create(accountDomain);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
-    public ResponseEntity deleteUser(@PathVariable int userId) {
-        accountDAO.delete(userId);
+    @RequestMapping(value = "/{accountId}", method = RequestMethod.DELETE)
+    public ResponseEntity deleteAccount(@PathVariable int accountId) {
+        accountDAO.delete(accountId);
         return new ResponseEntity(HttpStatus.OK);
     }
 }

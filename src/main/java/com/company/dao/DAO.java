@@ -1,7 +1,5 @@
 package com.company.dao;
 
-import com.company.entity.Developer;
-import com.company.entity.Project;
 import com.company.util.GenericReflector;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -47,7 +45,7 @@ public abstract class DAO<T> {
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            T result = (T) session.get(GenericReflector.getParameterType(this.getClass()), id);
+            T result = (T) session.get(GenericReflector.getSuperclassParameterType(this.getClass()), id);
             transaction.commit();
             return result;
         }
@@ -102,7 +100,7 @@ public abstract class DAO<T> {
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            List<T> projects = session.createCriteria(GenericReflector.getParameterType(this.getClass())).list();
+            List<T> projects = session.createCriteria(GenericReflector.getSuperclassParameterType(this.getClass())).list();
             transaction.commit();
             return projects;
         }

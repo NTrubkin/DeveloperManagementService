@@ -17,9 +17,11 @@ public class AccountDomain {
     }
 
     public AccountDomain(Account account) {
-        this.id = account.getId();
-        this.nickname = account.getNickname();
-        this.roleId = account.getRole().getId();
+        if(account != null) {
+            this.id = account.getId();
+            this.nickname = account.getNickname();
+            this.roleId = account.getRole().getId();
+        }
     }
 
     public int getId() {

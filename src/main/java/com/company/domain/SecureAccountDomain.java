@@ -20,7 +20,9 @@ public class SecureAccountDomain extends AccountDomain {
 
     public SecureAccountDomain(Account account) {
         super(account);
-        this.passhash = account.getPasshash();
+        if(account != null) {
+            this.passhash = account.getPasshash();
+        }
     }
 
     public String getPasshash() {

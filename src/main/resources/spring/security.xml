@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/security"
-             xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="http://www.springframework.org/schema/beans
-                    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-                    http://www.springframework.org/schema/security
-                    http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
-    <http auto-config="true" use-expressions="true">
+
+<http auto-config="true" use-expressions="true">
         <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')" method="GET" />
         <intercept-url pattern="/manager" access="hasRole('ROLE_MANAGER')" method="GET" />
         <intercept-url pattern="/developer" access="hasRole('ROLE_DEV')" method="GET" />

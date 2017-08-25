@@ -5,7 +5,7 @@ var createAccount = function () {
         'id': 0,
         'nickname': $("#nickname").val(),
         'roleId': document.getElementById("role").options[document.getElementById("role").selectedIndex].value,
-        'passhash': $("#passhash").val()
+        'passhash': $("#password").val()
     };
     $.ajax({
         type: 'POST',

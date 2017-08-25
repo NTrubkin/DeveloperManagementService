@@ -26,14 +26,15 @@ public class AccountDAOImpl implements DAO<Account> {
 
     @Override
     public void create(Account account) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.save(account);
         transaction.commit();
+        session.close();
     }
 
     public void create(SecureAccountDomain secureAccountDomain) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Role role = (Role) session.get(Role.class, secureAccountDomain.getRoleId());
         Account account = new Account(secureAccountDomain, role);
@@ -43,20 +44,22 @@ public class AccountDAOImpl implements DAO<Account> {
 
     @Override
     public Account read(Serializable id) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Account account = (Account) session.get(Account.class, id);
         transaction.commit();
+        session.close();
         return account;
     }
 
     public Account read(String nickname) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Criteria criteria = session.createCriteria(Account.class);
         criteria.add(Restrictions.eq("nickname", nickname));
         Account account = (Account) criteria.uniqueResult();
         transaction.commit();
+        session.close();
         return account;
     }
 
@@ -67,10 +70,11 @@ public class AccountDAOImpl implements DAO<Account> {
 
     @Override
     public void delete(Account account) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.delete(account);
         transaction.commit();
+        session.close();
     }
 
     public void delete(int accountId) {
@@ -81,10 +85,11 @@ public class AccountDAOImpl implements DAO<Account> {
 
     @Override
     public List<Account> readAll() {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         List<Account> accounts = session.createCriteria(Account.class).list();
         transaction.commit();
+        session.close();
         return accounts;
     }
 }

@@ -3,6 +3,8 @@ package com.company.dao;
 import java.io.Serializable;
 import java.util.List;
 
+//todo абстрактный класс
+
 public interface DAO<T> {
     void create(T t);
 

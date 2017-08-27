@@ -42,7 +42,7 @@ public class AccountController {
     /**
      * Возвращает информацию об аккаунте пользователя с id
      *
-     * @param accountId
+     * @param accountId id аккаунта в базе данных
      * @return AccountDomain и HttpStatus.OK, если успех
      */
     @RequestMapping(value = "/{accountId}", method = RequestMethod.GET)
@@ -68,7 +68,7 @@ public class AccountController {
     /**
      * Создает аккаунт пользователя в системе
      *
-     * @param accountDomain
+     * @param accountDomain бин-эквивалент Account сущности
      * @return HttpStatus.OK, если успех
      */
     @RequestMapping(value = "/", method = RequestMethod.POST)
@@ -81,7 +81,7 @@ public class AccountController {
     /**
      * Удаляет аккаунт пользователя из системы
      *
-     * @param accountId
+     * @param accountId id аккаунта в базе данных
      * @return HttpStatus.OK, если успех
      */
     @RequestMapping(value = "/{accountId}", method = RequestMethod.DELETE)

@@ -5,6 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Hibernate сущность, которая представляет роль пользователя
+ * Роль пользователя определяет доступный пользователю функционал в системе
+ */
 @Entity
 @Table(name = "role")
 public class Role {

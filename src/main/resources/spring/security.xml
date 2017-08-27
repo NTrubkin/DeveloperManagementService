@@ -1,22 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/security"
-             xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="http://www.springframework.org/schema/beans
-                    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-                    http://www.springframework.org/schema/security
-                    http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
-    <http auto-config="true" use-expressions="true">
-        <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')" method="GET" />
-        <intercept-url pattern="/manager" access="hasRole('ROLE_MANAGER')" method="GET" />
-        <intercept-url pattern="/developer" access="hasRole('ROLE_DEV')" method="GET" />
 
-        <intercept-url pattern="/account/**" access="hasRole('ROLE_ADMIN')" method="POST" />
-        <intercept-url pattern="/account/**" access="hasRole('ROLE_ADMIN')" method="GET" />
-        <intercept-url pattern="/account/**" access="hasRole('ROLE_ADMIN')" method="DELETE" />
+    <http request-matcher="regex" auto-config="true" use-expressions="true">
+        <!-- web страницы -->
+        <intercept-url pattern="\/admin\/?" access="hasRole('ROLE_ADMIN')" method="GET"/>
+        <intercept-url pattern="\/manager\/?" access="hasRole('ROLE_MANAGER')" method="GET"/>
+        <intercept-url pattern="\/developer\/?" access="hasRole('ROLE_DEV')" method="GET"/>
 
-        <http-basic/>
-        <logout/>
+        <!-- Rest сервис -->
+        <!-- account -->
+        <intercept-url pattern="\/account\/?" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_DEV')" method="GET"/>
+        <intercept-url pattern="\/account\/[0-9]{1,}\/?" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" method="GET"/>
+        <intercept-url pattern="\/account\/?" access="hasRole('ROLE_ADMIN')" method="POST"/>
+        <intercept-url pattern="\/account\/[0-9]{1,}\/?" access="hasRole('ROLE_ADMIN')" method="DELETE"/>
+
+        <!-- project -->
+        <intercept-url pattern="\/project\/?" access="hasAnyRole('ROLE_MANAGER', 'ROLE_DEV')" method="GET"/>
+        <intercept-url pattern="\/project\/[0-9]{1,}\/?" access="hasRole('ROLE_MANAGER')" method="GET"/>
+        <intercept-url pattern="\/project\/all_my\/?" access="hasAnyRole('ROLE_MANAGER', 'ROLE_DEV')" method="GET"/>
+        <intercept-url pattern="\/project\/?" access="hasRole('ROLE_MANAGER')" method="POST"/>
+        <intercept-url pattern="\/project\/[0-9]{1,}\/?" access="hasRole('ROLE_MANAGER')" method="DELETE"/>
+        <intercept-url pattern="\/project\/[0-9]{1,}\/active\/?" access="hasRole('ROLE_MANAGER')" method="PUT"/>
+        <intercept-url pattern="\/project\/current\/complete\/?" access="hasRole('ROLE_MANAGER')" method="PUT"/>
+        <intercept-url pattern="\/project\/[0-9]{1,}\/dev\/[0-9]{1,}\/?" access="hasRole('ROLE_MANAGER')" method="POST"/>
+        <intercept-url pattern="\/project\/[0-9]{1,}\/dev\/[0-9]{1,}\/?" access="hasRole('ROLE_MANAGER')" method="DELETE"/>
+        <intercept-url pattern="\/project\/[0-9]{1,}\/dev\/all\/?" access="hasRole('ROLE_MANAGER')" method="GET"/>
+        <intercept-url pattern="\/project\/dev\/avail\/?" access="hasRole('ROLE_MANAGER')" method="GET"/>
+
         <csrf disabled="true"/>
     </http>
 

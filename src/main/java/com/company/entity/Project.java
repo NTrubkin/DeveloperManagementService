@@ -4,6 +4,10 @@ import com.company.domain.ProjectDomain;
 
 import javax.persistence.*;
 
+/**
+ * Hibernate сущность, которая представляет собой проект.
+ * Проект - это некая задача профильная задача предприятия, которую назначает проект менеджер и исполняют разработчики
+ */
 @Entity
 @Table(name = "project", schema = "public", catalog = "postgres")
 public class Project {
@@ -25,10 +29,21 @@ public class Project {
     public Project() {
     }
 
+    /**
+     * Конструктор преобразования сущности ProjectDomain в Project
+     *
+     * @param projectDomain
+     */
     public Project(ProjectDomain projectDomain) {
         this(projectDomain, null);
     }
 
+    /**
+     * Конструктор преобразования сущности ProjectDomain в Project
+     *
+     * @param projectDomain
+     * @param manager
+     */
     public Project(ProjectDomain projectDomain, Account manager) {
         this.id = projectDomain.getId();
         this.name = projectDomain.getName();

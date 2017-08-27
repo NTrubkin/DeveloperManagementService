@@ -13,7 +13,7 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <spring.version>4.0.0.RELEASE</spring.version>
+        <spring.version>4.2.3.RELEASE</spring.version>
         <hibernate.version>4.3.6.Final</hibernate.version>
         <postgresql.version>9.1-901-1.jdbc4</postgresql.version>
     </properties>
@@ -86,12 +86,18 @@
             <version>2.5</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+
 
     </dependencies>
 </project>

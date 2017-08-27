@@ -5,9 +5,7 @@ import com.company.domain.AccountDomain;
 import com.company.domain.SecureAccountDomain;
 import com.company.entity.Account;
 import org.hibernate.StaleStateException;
-import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.hibernate.exception.ConstraintViolationException;
-import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -25,6 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/account")
 public class AccountController {
+    private static final String BAD_REQ = "Bad Request: ";
 
     @Autowired
     @Qualifier("accountDAO")
@@ -53,8 +52,8 @@ public class AccountController {
     @RequestMapping(value = "/{accountId}", method = RequestMethod.GET)
     public ResponseEntity<AccountDomain> getAccount(@PathVariable int accountId) {
         Account account = accountDAO.read(accountId);
-        if(account == null) {
-            return new ResponseEntity("Bad Request: Account with id " + accountId + " doesn't exists", HttpStatus.BAD_REQUEST);
+        if (account == null) {
+            return new ResponseEntity(BAD_REQ + "Account with id " + accountId + " doesn't exists", HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(new AccountDomain(account), HttpStatus.OK);
     }
@@ -85,9 +84,8 @@ public class AccountController {
         accountDomain.encodePass();
         try {
             accountDAO.create(accountDomain);
-        }
-        catch (ConstraintViolationException exc) {
-            return new ResponseEntity("Bad Request: " + exc.getClass().getName()
+        } catch (ConstraintViolationException exc) {
+            return new ResponseEntity(BAD_REQ + exc.getClass().getName()
                     + ". Probably, your nickname " + accountDomain.getNickname() + " is not unique", HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity(HttpStatus.OK);
@@ -105,14 +103,13 @@ public class AccountController {
     public ResponseEntity deleteAccount(@PathVariable int accountId, Authentication authentication) {
         String auth = authentication.getName();
         Account account = accountDAO.read(auth);
-        if(account.getId() == accountId) {
-            return new ResponseEntity("Bad Request: SelfDeletion is not allowed", HttpStatus.BAD_REQUEST);
+        if (account.getId() == accountId) {
+            return new ResponseEntity(BAD_REQ + "SelfDeletion is not allowed", HttpStatus.BAD_REQUEST);
         }
         try {
             accountDAO.delete(accountId);
-        }
-        catch (StaleStateException exc) {
-            return new ResponseEntity("Bad Request: " + exc.getClass()
+        } catch (StaleStateException exc) {
+            return new ResponseEntity(BAD_REQ + exc.getClass()
                     + ". Probably, you are trying to delete non-existent account", HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity(HttpStatus.OK);

@@ -22,6 +22,11 @@ public class ProjectDAOImpl extends DAO<Project> implements ProjectDAO {
             "FROM project p INNER JOIN developer d ON p.id = d.project_id\n" +
             "WHERE d.account_id = :id";
 
+    /**
+     * Создает объект Project в базе данных
+     *
+     * @param projectDomain бин-эквивалент сущности Project
+     */
     public void create(ProjectDomain projectDomain) {
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
@@ -40,12 +45,23 @@ public class ProjectDAOImpl extends DAO<Project> implements ProjectDAO {
         }
     }
 
+    /**
+     * Удаляет объект Project из базы данных
+     *
+     * @param projectId id проекта в базе данных
+     */
     public void delete(int projectId) {
         Project project = new Project();
         project.setId(projectId);
         delete(project);
     }
 
+    /**
+     * Читает все проекты, где автором является менеджер с managerId
+     *
+     * @param managerId
+     * @return
+     */
     public List<Project> readAllManagerProjects(int managerId) {
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
@@ -65,6 +81,12 @@ public class ProjectDAOImpl extends DAO<Project> implements ProjectDAO {
         }
     }
 
+    /**
+     * Возвращает текущий активный проект менеджера с managerId
+     *
+     * @param managerId
+     * @return
+     */
     public Project getCurrentManagerProject(int managerId) {
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
@@ -85,6 +107,12 @@ public class ProjectDAOImpl extends DAO<Project> implements ProjectDAO {
         }
     }
 
+    /**
+     * Возвращает текущий активный проект разработчика с managerId
+     *
+     * @param developerId
+     * @return
+     */
     public Project getCurrentDeveloperProject(int developerId) {
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
@@ -96,17 +124,21 @@ public class ProjectDAOImpl extends DAO<Project> implements ProjectDAO {
             Project result = (Project) query.uniqueResult();
             transaction.commit();
             return result;
-        }
-        catch (Exception exc) {
+        } catch (Exception exc) {
             if (transaction != null) transaction.rollback();
             logger.error(HIBERNATE_EXC_MSG);
             throw exc;
-        }
-        finally {
+        } finally {
             session.close();
         }
     }
 
+    /**
+     * Читает все проекты с участием разработчика с managerId
+     *
+     * @param developerId
+     * @return
+     */
     public List<Project> readAllDeveloperProjects(int developerId) {
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
@@ -118,13 +150,11 @@ public class ProjectDAOImpl extends DAO<Project> implements ProjectDAO {
             List<Project> results = query.list();
             transaction.commit();
             return results;
-        }
-        catch (Exception exc) {
+        } catch (Exception exc) {
             if (transaction != null) transaction.rollback();
             logger.error(HIBERNATE_EXC_MSG);
             throw exc;
-        }
-        finally {
+        } finally {
             session.close();
         }
     }

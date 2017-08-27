@@ -2,6 +2,12 @@ package com.company.domain;
 
 import com.company.entity.Account;
 
+/**
+ * Бин-эквивален сущности Account, использующийся для передачи(в том числе и по сети) основной публичной информации об аккаунте пользователя.
+ * Является облегченным модифицированным аналогом сущности Account.
+ * Способен конвертировать Account.
+ * Не следует использовать для передачи конфиденциальной информации(пароли, хеши, прочее)
+ */
 public class AccountDomain {
     private int id;
     private String nickname;
@@ -16,8 +22,13 @@ public class AccountDomain {
         this.roleId = roleId;
     }
 
+    /**
+     * Конструктор преобразования сущности Account в AccountDomain
+     *
+     * @param account сущность
+     */
     public AccountDomain(Account account) {
-        if(account != null) {
+        if (account != null) {
             this.id = account.getId();
             this.nickname = account.getNickname();
             this.roleId = account.getRole().getId();

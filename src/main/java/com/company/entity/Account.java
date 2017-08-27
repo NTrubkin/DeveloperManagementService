@@ -4,6 +4,10 @@ import com.company.domain.SecureAccountDomain;
 
 import javax.persistence.*;
 
+/**
+ * Hibernate сущность, которая представляет аккаунт пользователя.
+ * Аккаунт пользователя позволяет однозначно аутентифицировать и авторизовать пользователя.
+ */
 @Entity
 @Table(name = "account", schema = "public", catalog = "postgres")
 public class Account {
@@ -13,7 +17,6 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    // @todo проверить, есть ли возможность ограничить длину String в соответствии с varchar из базы данных
     @Column(name = "nickname")
     private String nickname;
 
@@ -27,10 +30,21 @@ public class Account {
     public Account() {
     }
 
+    /**
+     * Конструктор преобразования сущности SecureAccountDomain в Account
+     *
+     * @param accountDomain
+     */
     public Account(SecureAccountDomain accountDomain) {
         this(accountDomain, null);
     }
 
+    /**
+     * Конструктор преобразования сущности SecureAccountDomain в Account
+     *
+     * @param accountDomain
+     * @param role
+     */
     public Account(SecureAccountDomain accountDomain, Role role) {
         this.id = accountDomain.getId();
         this.nickname = accountDomain.getNickname();

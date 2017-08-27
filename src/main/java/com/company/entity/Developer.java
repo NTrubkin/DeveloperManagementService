@@ -4,6 +4,9 @@ package com.company.entity;
 
 import javax.persistence.*;
 
+/**
+ * Hibernate сущность, которая представляет факт привязки разработчика, к проекту
+ */
 @Entity
 @Table(name = "developer", schema = "public", catalog = "postgres")
 public class Developer {
@@ -23,6 +26,12 @@ public class Developer {
     public Developer() {
     }
 
+    public Developer(Account account, Project project) {
+        this.id = id;
+        this.account = account;
+        this.project = project;
+    }
+
     public int getId() {
         return id;
     }
@@ -33,12 +42,6 @@ public class Developer {
 
     public Account getAccount() {
         return account;
-    }
-
-    public Developer(Account account, Project project) {
-        this.id = id;
-        this.account = account;
-        this.project = project;
     }
 
     public void setAccount(Account account) {

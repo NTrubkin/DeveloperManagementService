@@ -2,6 +2,9 @@ package com.company.domain;
 
 import com.company.entity.Project;
 
+/**
+ * Бин-эквивален сущности Project, использующийся для передачи(в том числе и по сети) основной информации о проекте.
+ */
 public class ProjectDomain {
     private int id;
 
@@ -22,7 +25,7 @@ public class ProjectDomain {
     }
 
     public ProjectDomain(Project project) {
-        if(project != null) {
+        if (project != null) {
             this.id = project.getId();
             this.name = project.getName();
             this.complete = project.isComplete();

@@ -5,9 +5,14 @@ import com.company.util.HashGenerator;
 
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * Бин-эквивален сущности Account, использующийся для передачи(в том числе и по сети) основной конфиденциальной информации об аккаунте пользователя.
+ * Расширяет функционал AccountDomain для хранения конфиденциальной информации.
+ * Добавляет хранение паролей/хешей и метод генерации хешей.
+ */
 public class SecureAccountDomain extends AccountDomain {
 
-    private String passhash;
+    private String passhash;        // может хранить пароль либо хеш пароля
 
     public SecureAccountDomain() {
         super();
@@ -20,7 +25,7 @@ public class SecureAccountDomain extends AccountDomain {
 
     public SecureAccountDomain(Account account) {
         super(account);
-        if(account != null) {
+        if (account != null) {
             this.passhash = account.getPasshash();
         }
     }
@@ -33,7 +38,14 @@ public class SecureAccountDomain extends AccountDomain {
         this.passhash = passhash;
     }
 
-    public void encodePass() throws NoSuchAlgorithmException {
-        passhash = HashGenerator.generateSHA1(passhash);
+    /**
+     * Генерирует хеш пароля. Подменяет пароль из passhash на новый хеш
+     */
+    public void encodePass() {
+        try {
+            passhash = HashGenerator.generateSHA1(passhash);
+        } catch (NoSuchAlgorithmException exc) {
+            throw new UnsupportedOperationException("Error with hash generator", exc);
+        }
     }
 }

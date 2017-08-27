@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Реализует сервис аутентификации через базу данных
+ */
 @Service
 public class AccountService implements UserDetailsService, Serializable {
 
@@ -22,6 +25,10 @@ public class AccountService implements UserDetailsService, Serializable {
     @Override
     public UserDetails loadUserByUsername(String nickname) {
         return new UserDetails() {
+            /**
+             * Возвращает роли пользователя
+             * @return
+             */
             @Override
             public Collection<? extends GrantedAuthority> getAuthorities() {
                 List<SimpleGrantedAuthority> auths = new ArrayList<>();

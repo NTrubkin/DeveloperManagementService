@@ -1,6 +1,6 @@
 package com.company.service;
 
-import com.company.dao.AccountDAOImpl;
+import com.company.dao.AccountDAO;
 import com.company.entity.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -19,10 +18,10 @@ import java.util.List;
  * Реализует сервис аутентификации через базу данных
  */
 @Service
-public class AccountService implements UserDetailsService, Serializable {
+public class AccountService implements UserDetailsService {
 
     @Autowired
-    private transient AccountDAOImpl accountDAO;
+    private AccountDAO accountDAO;
 
     @Override
     public UserDetails loadUserByUsername(String nickname) {

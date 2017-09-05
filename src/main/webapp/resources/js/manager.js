@@ -33,7 +33,7 @@ function formProjectsTable() {
         type: 'GET',
         url:  prefix + '/project/all_my/',
         dataType: 'json',
-        async: true,
+        async: false,
         success: function(result) {
             formProjectsTableFromJson(result);
         },
@@ -76,7 +76,7 @@ function formCurrentProjectPanel() {
         type: 'GET',
         url:  prefix + '/project/',
         dataType: 'json',
-        async: true,
+        async: false,
         success: function(result) {
             if(result.id === 0) {
                 document.getElementById('currentProjectPanel').style.display = 'none';

@@ -47,7 +47,7 @@
         <table id="projects">
             <tr>
                 <th width="20">ID</th>
-                <th width="100">Nickname</th>
+                <th width="100">Name</th>
                 <th width="100">Complete</th>
             </tr>
         </table>

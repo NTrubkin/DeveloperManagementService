@@ -277,10 +277,10 @@ public class ProjectController {
             return new ResponseEntity(BAD_REQ + "Project with id " + projectId + " doesn't exists", HttpStatus.BAD_REQUEST);
         }
         if (!account.getId().equals(project.getManager().getId())) {
-            return new ResponseEntity(FORBID + "You are trying to set delete developer from not your project", HttpStatus.FORBIDDEN);
+            return new ResponseEntity(FORBID + "You are trying to delete developer from not your project", HttpStatus.FORBIDDEN);
         }
         Account developerAccount = accountDAO.read(developerId);
-        if (account == null) {
+        if (developerAccount == null) {
             return new ResponseEntity(BAD_REQ + "Developer with id " + developerId + " doesn't exists", HttpStatus.BAD_REQUEST);
         }
         try {

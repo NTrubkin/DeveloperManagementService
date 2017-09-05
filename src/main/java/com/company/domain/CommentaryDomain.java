@@ -12,15 +12,16 @@ public class CommentaryDomain {
 
     private String text;
 
-    public CommentaryDomain() {}
+    public CommentaryDomain() {
+    }
 
     public CommentaryDomain(Commentary commentary) {
-        if(commentary != null) {
+        if (commentary != null) {
             this.id = commentary.getId();
-            if(commentary.getAuthor() != null) {
+            if (commentary.getAuthor() != null) {
                 this.accountId = commentary.getAuthor().getId();
             }
-            if(commentary.getProject() != null) {
+            if (commentary.getProject() != null) {
                 this.projectId = commentary.getProject().getId();
             }
             this.text = commentary.getText();

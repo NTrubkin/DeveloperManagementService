@@ -65,7 +65,7 @@ public class Project {
         this.manager = manager;
         this.start = new Timestamp(projectDomain.getStart());
         this.estimatedEnd = new Timestamp(projectDomain.getEstimatedEnd());
-        if(projectDomain.getEnd() == null) {
+        if (projectDomain.getEnd() == null) {
             this.end = null;
         }
         else {

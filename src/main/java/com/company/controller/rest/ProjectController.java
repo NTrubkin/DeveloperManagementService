@@ -138,7 +138,7 @@ public class ProjectController {
 
     /**
      * Создает проект в системе от имени аутентифицированного пользователя
-     *
+     * <p>
      * todo закомментировать неипользуемые поля
      *
      * @param projectDomain
@@ -151,7 +151,7 @@ public class ProjectController {
         Account account = accountDAO.read(auth);
         projectDomain.setManagerId(account.getId());
         projectDomain.setStart(System.currentTimeMillis());
-        if(projectDomain.isComplete()) {
+        if (projectDomain.isComplete()) {
             projectDomain.setEnd(System.currentTimeMillis());
         }
         else {
@@ -188,6 +188,7 @@ public class ProjectController {
      * Отмечает проект с id активным
      * Важно помнить, что при восстановлении проекта все разработчики исключаются из проекта.
      * Это необходимо, чтобы избежать конфликта текущих проектов разработчиков
+     *
      * @param projectId
      * @return HttpStatus.OK, если успех,
      * если проект с id projectId не найден HttpStatus.BAD_REQUEST,
@@ -361,7 +362,7 @@ public class ProjectController {
         Account account = accountDAO.read(auth);
         Project project = projectDAO.read(projectId);
 
-        if(!project.getManager().getId().equals(account.getId()) || !developerDAO.isDeveloperOfProject(account.getId(), projectId)) {
+        if (!project.getManager().getId().equals(account.getId()) || !developerDAO.isDeveloperOfProject(account.getId(), projectId)) {
             return new ResponseEntity(BAD_REQ + "You are not join to project with id " + project, HttpStatus.FORBIDDEN);
         }
 
@@ -378,7 +379,7 @@ public class ProjectController {
         Account account = accountDAO.read(auth);
         Project project = projectDAO.read(projectId);
 
-        if(!project.getManager().getId().equals(account.getId()) || !developerDAO.isDeveloperOfProject(account.getId(), projectId)) {
+        if (!project.getManager().getId().equals(account.getId()) || !developerDAO.isDeveloperOfProject(account.getId(), projectId)) {
             return new ResponseEntity(BAD_REQ + "You are not join to project with id " + project, HttpStatus.FORBIDDEN);
         }
 

@@ -2,8 +2,6 @@ package com.company.domain;
 
 import com.company.entity.Project;
 
-import java.sql.Timestamp;
-
 /**
  * Бин-эквивален сущности Project, использующийся для передачи(в том числе и по сети) основной информации о проекте.
  */
@@ -48,7 +46,7 @@ public class ProjectDomain {
             this.managerId = project.getManager().getId();
             this.start = project.getStart().getTime();
             this.estimatedEnd = project.getEstimatedEnd().getTime();
-            if(project.getEnd() == null) {
+            if (project.getEnd() == null) {
                 end = null;
             }
             else {

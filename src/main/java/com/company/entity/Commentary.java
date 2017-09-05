@@ -27,7 +27,7 @@ public class Commentary {
     }
 
     public Commentary(CommentaryDomain commentaryDomain, Account author, Project project) {
-        if(commentaryDomain != null) {
+        if (commentaryDomain != null) {
             this.id = commentaryDomain.getId();
             this.text = commentaryDomain.getText();
             this.author = author;

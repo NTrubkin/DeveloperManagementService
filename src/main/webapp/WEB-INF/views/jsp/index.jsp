@@ -11,7 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-<%@include file="header.jsp"%>
+<%@include file="header.jsp" %>
 <h1>Home page</h1>
 </body>
 </html>

@@ -1,12 +1,9 @@
 package com.company.dao.commentary;
 
 import com.company.dao.DAO;
-import com.company.domain.CommentaryDomain;
 import com.company.entity.Commentary;
-import com.company.entity.Project;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;

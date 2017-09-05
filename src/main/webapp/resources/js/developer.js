@@ -8,11 +8,11 @@ function init() {
 function formCurrentProjectPanel() {
     $.ajax({
         type: 'GET',
-        url:  prefix + '/project/',
+        url: prefix + '/project/',
         dataType: 'json',
         async: true,
-        success: function(result) {
-            if(result.id === 0) {
+        success: function (result) {
+            if (result.id === 0) {
                 document.getElementById('notNullCurProjectPanel').style.display = 'none';
                 document.getElementById('nullCurProjectPanel').style.display = 'block';
             }
@@ -24,7 +24,7 @@ function formCurrentProjectPanel() {
                 document.getElementById('notNullCurProjectPanel').style.display = 'block';
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             alert(jqXHR.status + ' ' + jqXHR.responseText);
         }
     });
@@ -33,25 +33,25 @@ function formCurrentProjectPanel() {
 function formAllProjectsTable() {
     $.ajax({
         type: 'GET',
-        url:  prefix + '/project/all_my/',
+        url: prefix + '/project/all_my/',
         dataType: 'json',
         async: true,
-        success: function(result) {
+        success: function (result) {
             formProjectsTableFromJson(result);
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             alert(jqXHR.status + ' ' + jqXHR.responseText);
         }
     });
 }
 
 function formProjectsTableFromJson(json) {
-        var tr;
-        for (var i = 0; i < json.length; i++) {
-            tr = $('<tr/>');
-            tr.append("<td>" + json[i].id + "</td>");
-            tr.append("<td>" + json[i].name + "</td>");
-            tr.append("<td>" + json[i].complete + "</td>");
-            $('#projects').append(tr);
-        }
+    var tr;
+    for (var i = 0; i < json.length; i++) {
+        tr = $('<tr/>');
+        tr.append("<td>" + json[i].id + "</td>");
+        tr.append("<td>" + json[i].name + "</td>");
+        tr.append("<td>" + json[i].complete + "</td>");
+        $('#projects').append(tr);
+    }
 }

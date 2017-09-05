@@ -1,10 +1,13 @@
-SELECT * FROM account
+SELECT *
+FROM account
 WHERE id NOT IN (SELECT DISTINCT d.account_id
-                 FROM developer d INNER JOIN project p on d.project_id = p.id
-                 WHERE p.complete = FALSE ) AND role_id = (SELECT id FROM role WHERE code = 'ROLE_DEV');
+                 FROM developer d INNER JOIN project p ON d.project_id = p.id
+                 WHERE p.complete = FALSE) AND role_id = (SELECT id
+                                                          FROM role
+                                                          WHERE code = 'ROLE_DEV');
 
 -- busy ids
 
 SELECT DISTINCT d.account_id
-FROM developer d INNER JOIN project p on d.project_id = p.id
+FROM developer d INNER JOIN project p ON d.project_id = p.id
 WHERE p.complete = FALSE;

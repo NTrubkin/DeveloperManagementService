@@ -33,7 +33,7 @@ public class AccountService implements UserDetailsService {
             @Override
             public Collection<? extends GrantedAuthority> getAuthorities() {
                 Account account = accountDAO.read(nickname);
-                if(account == null) {
+                if (account == null) {
                     throw new UsernameNotFoundException("There is no account with nickname '" + nickname + "' in database");
                 }
 
@@ -45,7 +45,7 @@ public class AccountService implements UserDetailsService {
             @Override
             public String getPassword() {
                 Account account = accountDAO.read(nickname);
-                if(account == null) {
+                if (account == null) {
                     throw new UsernameNotFoundException("There is no account with nickname '" + nickname + "' in database");
                 }
                 return account.getPasshash();

@@ -1,6 +1,5 @@
 package com.company.dao.commentary;
 
-import com.company.domain.CommentaryDomain;
 import com.company.entity.Commentary;
 
 import java.io.Serializable;

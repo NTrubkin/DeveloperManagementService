@@ -59,6 +59,9 @@
             <div>
                 <label>Name:</label>
                 <input type="text" id="name"/>
+                <label>Estimated end: </label>
+                <input type="date" id="estEndDate">
+                <input type="time" id="estEndTime">
                 <button onclick="createProject()">Create</button>
             </div>
         </div>

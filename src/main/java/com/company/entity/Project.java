@@ -3,6 +3,7 @@ package com.company.entity;
 import com.company.domain.ProjectDomain;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 /**
  * Hibernate сущность, которая представляет собой проект.
@@ -25,6 +26,19 @@ public class Project {
     @OneToOne
     @JoinColumn(name = "manager_id")
     private Account manager;
+
+    @Column(name = "start")
+    private Timestamp start;
+
+    @Column(name = "estimated_end")
+    private Timestamp estimatedEnd;
+
+    /**
+     * Поле end указывает на фактическое время завершения проекта
+     * Если поле complete ложно, то end следует присвоить null и определить позднее по факту завершения проекта
+     */
+    @Column(name = "end_")
+    private Timestamp end;
 
     public Project() {
     }
@@ -49,6 +63,14 @@ public class Project {
         this.name = projectDomain.getName();
         this.complete = projectDomain.isComplete();
         this.manager = manager;
+        this.start = new Timestamp(projectDomain.getStart());
+        this.estimatedEnd = new Timestamp(projectDomain.getEstimatedEnd());
+        if(projectDomain.getEnd() == null) {
+            this.end = null;
+        }
+        else {
+            this.end = new Timestamp(projectDomain.getEnd());
+        }
     }
 
     public int getId() {
@@ -81,5 +103,29 @@ public class Project {
 
     public void setManager(Account manager) {
         this.manager = manager;
+    }
+
+    public Timestamp getStart() {
+        return start;
+    }
+
+    public void setStart(Timestamp start) {
+        this.start = start;
+    }
+
+    public Timestamp getEstimatedEnd() {
+        return estimatedEnd;
+    }
+
+    public void setEstimatedEnd(Timestamp estimatedEnd) {
+        this.estimatedEnd = estimatedEnd;
+    }
+
+    public Timestamp getEnd() {
+        return end;
+    }
+
+    public void setEnd(Timestamp end) {
+        this.end = end;
     }
 }

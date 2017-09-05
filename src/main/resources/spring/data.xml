@@ -17,7 +17,11 @@
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
     </bean>
 
-    <bean id="developerDAO" class="com.company.dao.DeveloperDaoImpl">
+    <bean id="developerDAO" class="com.company.dao.DeveloperDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
+    </bean>
+
+    <bean id="commentaryDAO" class="com.company.dao.commentary.CommentaryDAOImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
     </bean>
 
@@ -31,6 +35,7 @@
                 <value>com.company.entity.Project</value>
                 <value>com.company.entity.Role</value>
                 <value>com.company.entity.Developer</value>
+                <value>com.company.entity.Commentary</value>
             </list>
         </property>
         <property name="hibernateProperties">

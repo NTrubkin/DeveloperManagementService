@@ -74,4 +74,6 @@ public interface DeveloperDAO {
      * @return
      */
     List<Account> readAllAvailable();
+
+    boolean isDeveloperOfProject(int developerId, int projectId);
 }

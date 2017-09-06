@@ -1,4 +1,3 @@
-import com.company.domain.AccountDomain;
 import com.company.domain.ProjectDomain;
 import com.company.domain.SecureAccountDomain;
 import com.company.entity.Account;

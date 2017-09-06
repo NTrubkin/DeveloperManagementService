@@ -3,11 +3,15 @@ package com.company.controller.rest;
 import com.company.dao.AccountDAO;
 import com.company.dao.DeveloperDAO;
 import com.company.dao.ProjectDAO;
+import com.company.dao.commentary.CommentaryDAO;
 import com.company.domain.AccountDomain;
+import com.company.domain.CommentaryDomain;
 import com.company.domain.ProjectDomain;
 import com.company.entity.Account;
+import com.company.entity.Commentary;
 import com.company.entity.Developer;
 import com.company.entity.Project;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -15,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -26,6 +31,8 @@ import java.util.Objects;
 @RestController
 @RequestMapping(value = "/project")
 public class ProjectController {
+    private static final Logger logger = Logger.getLogger(ProjectController.class);
+
     private static final String ROLE_DEV_CODE = "ROLE_DEV";
     private static final String ROLE_MANAGER_CODE = "ROLE_MANAGER";
 
@@ -44,6 +51,10 @@ public class ProjectController {
     @Autowired
     @Qualifier("developerDAO")
     DeveloperDAO developerDAO;
+
+    @Autowired
+    @Qualifier("commentaryDAO")
+    CommentaryDAO commentaryDAO;
 
     /**
      * Возвращает информацию о текущем проекте аутентифицированного пользователя
@@ -127,6 +138,8 @@ public class ProjectController {
 
     /**
      * Создает проект в системе от имени аутентифицированного пользователя
+     * <p>
+     * todo закомментировать неипользуемые поля
      *
      * @param projectDomain
      * @param authentication
@@ -137,6 +150,13 @@ public class ProjectController {
         String auth = authentication.getName();
         Account account = accountDAO.read(auth);
         projectDomain.setManagerId(account.getId());
+        projectDomain.setStart(System.currentTimeMillis());
+        if (projectDomain.isComplete()) {
+            projectDomain.setEnd(System.currentTimeMillis());
+        }
+        else {
+            projectDomain.setEnd(null);
+        }
         projectDAO.create(projectDomain);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -168,6 +188,7 @@ public class ProjectController {
      * Отмечает проект с id активным
      * Важно помнить, что при восстановлении проекта все разработчики исключаются из проекта.
      * Это необходимо, чтобы избежать конфликта текущих проектов разработчиков
+     *
      * @param projectId
      * @return HttpStatus.OK, если успех,
      * если проект с id projectId не найден HttpStatus.BAD_REQUEST,
@@ -192,6 +213,7 @@ public class ProjectController {
 
         developerDAO.deleteAllProjectDevelopers(projectId);
         project.setComplete(false);
+        project.setEnd(null);       // todo решить, следует ли определить логику управления датой завершения в сущности или оставить это здесь
         projectDAO.update(project);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -212,6 +234,7 @@ public class ProjectController {
             return new ResponseEntity(BAD_REQ + "You dont have current project", HttpStatus.BAD_REQUEST);
         }
         currentProject.setComplete(true);
+        currentProject.setEnd(new Timestamp(System.currentTimeMillis()));
         projectDAO.update(currentProject);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -240,7 +263,7 @@ public class ProjectController {
             return new ResponseEntity(FORBID + "You are trying to set developer to not your project", HttpStatus.FORBIDDEN);
         }
         Account developerAccount = accountDAO.read(developerId);
-        if (account == null) {
+        if (developerAccount == null) {
             return new ResponseEntity(BAD_REQ + "Developer with id " + developerId + " doesn't exists", HttpStatus.BAD_REQUEST);
         }
         if (!developerAccount.getRole().getCode().equals(ROLE_DEV_CODE)) {
@@ -277,10 +300,10 @@ public class ProjectController {
             return new ResponseEntity(BAD_REQ + "Project with id " + projectId + " doesn't exists", HttpStatus.BAD_REQUEST);
         }
         if (!account.getId().equals(project.getManager().getId())) {
-            return new ResponseEntity(FORBID + "You are trying to set delete developer from not your project", HttpStatus.FORBIDDEN);
+            return new ResponseEntity(FORBID + "You are trying to delete developer from not your project", HttpStatus.FORBIDDEN);
         }
         Account developerAccount = accountDAO.read(developerId);
-        if (account == null) {
+        if (developerAccount == null) {
             return new ResponseEntity(BAD_REQ + "Developer with id " + developerId + " doesn't exists", HttpStatus.BAD_REQUEST);
         }
         try {
@@ -331,5 +354,37 @@ public class ProjectController {
             devs.add(new AccountDomain(account));
         }
         return new ResponseEntity<>(devs, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{projectId}/comment/all", method = RequestMethod.GET)
+    public ResponseEntity<List<CommentaryDomain>> getCommentaries(@PathVariable int projectId, Authentication authentication) {
+        String auth = authentication.getName();
+        Account account = accountDAO.read(auth);
+        Project project = projectDAO.read(projectId);
+
+        if (!project.getManager().getId().equals(account.getId()) || !developerDAO.isDeveloperOfProject(account.getId(), projectId)) {
+            return new ResponseEntity(BAD_REQ + "You are not join to project with id " + project, HttpStatus.FORBIDDEN);
+        }
+
+        List<CommentaryDomain> commentaries = new ArrayList<>();
+        for (Commentary commentary : commentaryDAO.readAll(projectId)) {
+            commentaries.add(new CommentaryDomain(commentary));
+        }
+        return new ResponseEntity<>(commentaries, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{projectId}/comment", method = RequestMethod.POST)
+    public ResponseEntity postCommentary(@PathVariable int projectId, @RequestBody CommentaryDomain commentaryDomain, Authentication authentication) {
+        String auth = authentication.getName();
+        Account account = accountDAO.read(auth);
+        Project project = projectDAO.read(projectId);
+
+        if (!project.getManager().getId().equals(account.getId()) || !developerDAO.isDeveloperOfProject(account.getId(), projectId)) {
+            return new ResponseEntity(BAD_REQ + "You are not join to project with id " + project, HttpStatus.FORBIDDEN);
+        }
+
+        Commentary commentary = new Commentary(commentaryDomain, account, project);
+        commentaryDAO.create(commentary);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

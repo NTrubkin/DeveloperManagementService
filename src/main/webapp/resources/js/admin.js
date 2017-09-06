@@ -9,14 +9,14 @@ var createAccount = function () {
     };
     $.ajax({
         type: 'POST',
-        url:  prefix + "/account/",
+        url: prefix + "/account/",
         contentType: 'application/json; charset=utf-8',
         async: true,
         data: JSON.stringify(account),
-        success: function(result) {
+        success: function (result) {
             window.location.reload();
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             alert(jqXHR.status + ' ' + jqXHR.responseText);
         }
     });
@@ -25,46 +25,46 @@ var createAccount = function () {
 function formAccountsTable() {
     $.ajax({
         type: 'GET',
-        url:  prefix + '/account/all/',
+        url: prefix + '/account/all/',
         dataType: 'json',
         async: true,
-        success: function(result) {
+        success: function (result) {
             formAccountsTableFromJson(result);
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             alert(jqXHR.status + ' ' + jqXHR.responseText);
         }
     });
 }
 
 function formAccountsTableFromJson(json) {
-        var tr;
-        for (var i = 0; i < json.length; i++) {
-            tr = $('<tr/>');
-            tr.append("<td>" + json[i].id + "</td>");
-            tr.append("<td>" + json[i].nickname + "</td>");
-            tr.append("<td>" + roleCodeToType(json[i].roleId) + "</td>");
-            tr.append("<td><a href='#' onclick='deleteAccount(" + json[i].id +");return false;'>X</a></td>");
-            $('#accounts').append(tr);
-        }
+    var tr;
+    for (var i = 0; i < json.length; i++) {
+        tr = $('<tr/>');
+        tr.append("<td>" + json[i].id + "</td>");
+        tr.append("<td>" + json[i].nickname + "</td>");
+        tr.append("<td>" + roleCodeToType(json[i].roleId) + "</td>");
+        tr.append("<td><a href='#' onclick='deleteAccount(" + json[i].id + ");return false;'>X</a></td>");
+        $('#accounts').append(tr);
+    }
 }
 
 function deleteAccount(id) {
     $.ajax({
         type: 'DELETE',
-        url:  prefix + '/account/' + id,
+        url: prefix + '/account/' + id,
         async: true,
-        success: function(result) {
+        success: function (result) {
             window.location.reload();
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             alert(jqXHR.status + ' ' + jqXHR.responseText);
         }
     });
 }
 
 function roleCodeToType(code) {
-    switch(code) {
+    switch (code) {
         case 1:
             return 'Administrator';
         case 2:

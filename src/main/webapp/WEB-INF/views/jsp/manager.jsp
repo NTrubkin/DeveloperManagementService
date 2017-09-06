@@ -6,12 +6,12 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
     <title>Title</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <spring:url value="/resources/js/manager.js" var="managerJS" />
+    <spring:url value="/resources/js/manager.js" var="managerJS"/>
     <script src="${managerJS}"></script>
     <style>
         #body {
@@ -47,7 +47,7 @@
         <table id="projects">
             <tr>
                 <th width="20">ID</th>
-                <th width="100">Nickname</th>
+                <th width="100">Name</th>
                 <th width="100">Complete</th>
             </tr>
         </table>
@@ -59,6 +59,9 @@
             <div>
                 <label>Name:</label>
                 <input type="text" id="name"/>
+                <label>Estimated end: </label>
+                <input type="date" id="estEndDate">
+                <input type="time" id="estEndTime">
                 <button onclick="createProject()">Create</button>
             </div>
         </div>

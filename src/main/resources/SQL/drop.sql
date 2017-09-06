@@ -1,3 +1,4 @@
+DROP TABLE public.commentary;
 DROP TABLE public.developer;
 DROP TABLE public.project;
 DROP TABLE public.account;

@@ -12,8 +12,8 @@ import org.hibernate.criterion.Restrictions;
 import java.io.Serializable;
 import java.util.List;
 
-public class DeveloperDaoImpl extends DAO<Developer> implements DeveloperDAO {
-    private static final Logger logger = Logger.getLogger(DeveloperDaoImpl.class);
+public class DeveloperDAOImpl extends DAO<Developer> implements DeveloperDAO {
+    private static final Logger logger = Logger.getLogger(DeveloperDAOImpl.class);
 
     private static final String SQL_SELECT_AVAIL_DEVS = "SELECT * FROM account\n" +
             "WHERE id NOT IN (SELECT DISTINCT d.account_id\n" +
@@ -145,5 +145,14 @@ public class DeveloperDaoImpl extends DAO<Developer> implements DeveloperDAO {
         } finally {
             session.close();
         }
+    }
+
+    public boolean isDeveloperOfProject(int developerId, int projectId) {
+        for (Developer dev : readAll(projectId)) {
+            if (dev.getId() == developerId) {
+                return true;
+            }
+        }
+        return false;
     }
 }

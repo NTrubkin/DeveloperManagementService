@@ -58,6 +58,14 @@ function formProjectsTableFromJson(json) {
         tr = $('<tr/>');
         tr.append("<td>" + json[i].id + "</td>");
         tr.append("<td>" + json[i].name + "</td>");
+        tr.append("<td>" + new Date(json[i].start).toLocaleString() + "</td>");
+        tr.append("<td>" + new Date(json[i].estimatedEnd).toLocaleString() + "</td>");
+        if(json[i].end === null) {
+            tr.append("<td> - </td>");
+        }
+        else {
+            tr.append("<td>" + new Date(json[i].end).toLocaleString() + "</td>");
+        }
         tr.append("<td>" + json[i].complete + "</td>");
         if (currentProjectId === 0) {
             tr.append("<td><a href='#' onclick='reopen(" + json[i].id + ");return false;'>reopen</a></td>");

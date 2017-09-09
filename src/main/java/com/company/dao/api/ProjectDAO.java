@@ -1,4 +1,4 @@
-package com.company.dao;
+package com.company.dao.api;
 
 import com.company.domain.ProjectDomain;
 import com.company.entity.Project;

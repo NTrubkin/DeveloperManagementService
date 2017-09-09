@@ -9,7 +9,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>DMS: Manager</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <spring:url value="/resources/js/manager.js" var="managerJS"/>
     <script src="${managerJS}"></script>
@@ -38,7 +38,8 @@
     </style>
 </head>
 <body onload="init();">
-<%@include file="header.jsp" %>
+<%@include file="../header.jsp" %>
+<%@include file="menu.jsp" %>
 <h1>Project manager page</h1>
 
 <div style="width: 100%;">

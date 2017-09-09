@@ -1,10 +1,5 @@
 var prefix = '/developer-management-service-1.0-SNAPSHOT';
 
-function init() {
-    formCurrentProjectPanel();
-    formAllProjectsTable();
-}
-
 function formCurrentProjectPanel() {
     $.ajax({
         type: 'GET',
@@ -19,7 +14,10 @@ function formCurrentProjectPanel() {
             else {
                 $('#projectId').append(result.id);
                 $('#projectName').append(result.name);
-                $('#projectComplete').append(result.complete.toString());
+                var start = new Date(result.start);
+                $('#projectStart').append(start.toLocaleString());
+                var estEnd = new Date(result.estimatedEnd);
+                $('#projectEstEnd').append(estEnd.toLocaleString());
                 document.getElementById('nullCurProjectPanel').style.display = 'none';
                 document.getElementById('notNullCurProjectPanel').style.display = 'block';
             }
@@ -51,6 +49,14 @@ function formProjectsTableFromJson(json) {
         tr = $('<tr/>');
         tr.append("<td>" + json[i].id + "</td>");
         tr.append("<td>" + json[i].name + "</td>");
+        tr.append("<td>" + new Date(json[i].start).toLocaleString() + "</td>");
+        tr.append("<td>" + new Date(json[i].estimatedEnd).toLocaleString() + "</td>");
+        if(json[i].end === null) {
+            tr.append("<td> - </td>");
+        }
+        else {
+            tr.append("<td>" + new Date(json[i].end).toLocaleString() + "</td>");
+        }
         tr.append("<td>" + json[i].complete + "</td>");
         $('#projects').append(tr);
     }

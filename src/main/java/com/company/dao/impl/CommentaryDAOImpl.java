@@ -1,6 +1,7 @@
-package com.company.dao.commentary;
+package com.company.dao.impl;
 
-import com.company.dao.DAO;
+import com.company.dao.api.CommentaryDAO;
+import com.company.dao.api.DAO;
 import com.company.entity.Commentary;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;

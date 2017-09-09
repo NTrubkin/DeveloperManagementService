@@ -1,9 +1,9 @@
 package com.company.controller.rest;
 
-import com.company.dao.AccountDAO;
-import com.company.dao.DeveloperDAO;
-import com.company.dao.ProjectDAO;
-import com.company.dao.commentary.CommentaryDAO;
+import com.company.dao.api.AccountDAO;
+import com.company.dao.api.DeveloperDAO;
+import com.company.dao.api.ProjectDAO;
+import com.company.dao.api.CommentaryDAO;
 import com.company.domain.AccountDomain;
 import com.company.domain.CommentaryDomain;
 import com.company.domain.ProjectDomain;
@@ -151,11 +151,14 @@ public class ProjectController {
         Account account = accountDAO.read(auth);
         projectDomain.setManagerId(account.getId());
         projectDomain.setStart(System.currentTimeMillis());
-        if (projectDomain.isComplete()) {
-            projectDomain.setEnd(System.currentTimeMillis());
+        Project currentProject = projectDAO.getCurrentManagerProject(account.getId());
+        if(currentProject == null) {
+            projectDomain.setComplete(false);
+            projectDomain.setEnd(null);
         }
         else {
-            projectDomain.setEnd(null);
+            projectDomain.setComplete(true);
+            projectDomain.setEnd(System.currentTimeMillis());
         }
         projectDAO.create(projectDomain);
         return new ResponseEntity(HttpStatus.OK);

@@ -1,5 +1,7 @@
-package com.company.dao;
+package com.company.dao.impl;
 
+import com.company.dao.api.DAO;
+import com.company.dao.api.DeveloperDAO;
 import com.company.entity.Account;
 import com.company.entity.Developer;
 import org.apache.log4j.Logger;

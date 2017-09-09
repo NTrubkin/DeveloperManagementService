@@ -1,4 +1,4 @@
-package com.company.dao.commentary;
+package com.company.dao.api;
 
 import com.company.entity.Commentary;
 

@@ -82,5 +82,5 @@ function sendCommentary() {
 }
 
 function formatTime(time) {
-    return time.toLocaleDateString() + "<br>" + time.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    return time.toLocaleDateString() + "<br>" + time.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
 }

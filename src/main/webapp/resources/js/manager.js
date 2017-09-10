@@ -60,7 +60,7 @@ function formProjectsTableFromJson(json) {
         tr.append("<td>" + json[i].name + "</td>");
         tr.append("<td>" + new Date(json[i].start).toLocaleString() + "</td>");
         tr.append("<td>" + new Date(json[i].estimatedEnd).toLocaleString() + "</td>");
-        if(json[i].end === null) {
+        if (json[i].end === null) {
             tr.append("<td> - </td>");
         }
         else {

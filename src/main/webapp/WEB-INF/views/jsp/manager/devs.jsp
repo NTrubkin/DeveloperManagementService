@@ -23,21 +23,24 @@
         #noneTables {
             display: none;
         }
+
         #devsTables {
             display: none;
         }
-        #devsInProject{
+
+        #devsInProject {
             float: left;
         }
-        #availDevs{
+
+        #availDevs {
             float: left;
             margin: 0px 8px;
         }
     </style>
 </head>
 <body onload="init()">
-<%@include file="../header.jsp"%>
-<%@include file="menu.jsp"%>
+<%@include file="../header.jsp" %>
+<%@include file="menu.jsp" %>
 
 <div class="content">
     <div id="noneTables">

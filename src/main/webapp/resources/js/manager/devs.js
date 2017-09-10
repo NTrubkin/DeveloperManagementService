@@ -2,7 +2,7 @@ var prefix = '/developer-management-service-1.0-SNAPSHOT';
 
 function init() {
     chechCurrentProject();
-    if(isCurrentProjectExists) {
+    if (isCurrentProjectExists) {
         formProjectDevelopersTable();
         formAvailableDevelopersTable();
         document.getElementById('noneTables').style.display = 'none';

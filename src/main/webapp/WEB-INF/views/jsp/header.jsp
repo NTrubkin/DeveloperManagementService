@@ -14,7 +14,8 @@
 <body id="body">
 <div id="header">
     <div id="leftHeader">
-        <button onclick="location.href= '${urlPrefix}${'/'}'" class="button"><strong>DEVELOPER MANAGEMENT SYSTEM</strong></button>
+        <button onclick="location.href= '${urlPrefix}${'/'}'" class="button"><strong>DEVELOPER MANAGEMENT
+            SYSTEM</strong></button>
     </div>
     <div id="centerHeader">
         <button onclick="location.href = '${urlPrefix}${'/admin'}'" class="button">ADMIN</button>
@@ -22,7 +23,8 @@
         <button onclick="location.href = '${urlPrefix}${'/developer'}'" class="button">DEVELOPER</button>
     </div>
     <div id="rightHeader">
-        <button onclick="location.href = '${urlPrefix}${'/login'}'" class="button"><img src="${urlPrefix}${'/resources/icons/login.png'}"/></button>
+        <button onclick="location.href = '${urlPrefix}${'/login'}'" class="button"><img
+                src="${urlPrefix}${'/resources/icons/login.png'}"/></button>
     </div>
 </div>
 </body>

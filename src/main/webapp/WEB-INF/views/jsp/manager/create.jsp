@@ -18,8 +18,8 @@
     <script src="${managerJS}"></script>
 </head>
 <body>
-<%@include file="../header.jsp"%>
-<%@include file="menu.jsp"%>
+<%@include file="../header.jsp" %>
+<%@include file="menu.jsp" %>
 
 <div class="content">
     <div>

@@ -9,7 +9,8 @@
     <spring:url value="/resources/css/dialog.css" var="dialogCSS"/>
     <link href="${dialogCSS}" rel="stylesheet" type="text/css">
 </head>
-<body">
+<body
+">
 <%@include file="../header.jsp" %>
 <%@include file="menu.jsp" %>
 
@@ -17,11 +18,11 @@
     <table id="accounts" class="dialog">
         <tr>
             <td class="question">Nickname</td>
-            <td class="answer"><input id="nickname" /></td>
+            <td class="answer"><input id="nickname"/></td>
         </tr>
         <tr>
             <td class="question">Password</td>
-            <td class="answer"><input type="password" id="password" /></td>
+            <td class="answer"><input type="password" id="password"/></td>
         </tr>
         <tr>
             <td class="question">Role</td>

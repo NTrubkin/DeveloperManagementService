@@ -27,8 +27,8 @@
     </style>
 </head>
 <body onload="formCurrentProjectPanel();">
-<%@include file="../header.jsp"%>
-<%@include file="menu.jsp"%>
+<%@include file="../header.jsp" %>
+<%@include file="menu.jsp" %>
 
 <div class="content">
     <div id="nullCurProjectPanel">

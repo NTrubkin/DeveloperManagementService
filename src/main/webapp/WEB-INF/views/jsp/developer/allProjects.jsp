@@ -18,8 +18,8 @@
     <link href="${tableCSS}" rel="stylesheet" type="text/css">
 </head>
 <body onload="formAllProjectsTable();">
-<%@include file="../header.jsp"%>
-<%@include file="menu.jsp"%>
+<%@include file="../header.jsp" %>
+<%@include file="menu.jsp" %>
 
 <div class="content">
     <table id="projects" class="table">

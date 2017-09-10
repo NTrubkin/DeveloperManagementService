@@ -18,17 +18,18 @@
     <link href="${chatCSS}" rel="stylesheet" type="text/css">
 
     <style>
-        #chatPanel{
+        #chatPanel {
             display: none;
         }
-        #nonePanel{
+
+        #nonePanel {
             display: none;
         }
     </style>
 </head>
 <body onload="formChatPanel();">
-<%@include file="../header.jsp"%>
-<%@include file="menu.jsp"%>
+<%@include file="../header.jsp" %>
+<%@include file="menu.jsp" %>
 
 <div class="content">
     <div id="nonePanel">

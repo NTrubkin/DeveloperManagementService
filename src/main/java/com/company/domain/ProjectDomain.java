@@ -14,7 +14,6 @@ public class ProjectDomain {
 
     private int managerId;
 
-    // todo написать тесты проверки корректности конвертирования времени сущность-домен
     private long start;
 
     private long estimatedEnd;

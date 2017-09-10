@@ -8,9 +8,13 @@ public class CommentaryDomain {
 
     private int accountId;
 
+    private String accountNickname;
+
     private int projectId;
 
     private String text;
+
+    private long time;
 
     public CommentaryDomain() {
     }
@@ -20,11 +24,13 @@ public class CommentaryDomain {
             this.id = commentary.getId();
             if (commentary.getAuthor() != null) {
                 this.accountId = commentary.getAuthor().getId();
+                this.accountNickname = commentary.getAuthor().getNickname();
             }
             if (commentary.getProject() != null) {
                 this.projectId = commentary.getProject().getId();
             }
             this.text = commentary.getText();
+            this.time = commentary.getTime().getTime();
         }
     }
 
@@ -58,5 +64,21 @@ public class CommentaryDomain {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public String getAccountNickname() {
+        return accountNickname;
+    }
+
+    public void setAccountNickname(String accountNickname) {
+        this.accountNickname = accountNickname;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
     }
 }

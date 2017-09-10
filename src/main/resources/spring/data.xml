@@ -9,19 +9,19 @@
 
     <context:component-scan base-package="com.company"/>
 
-    <bean id="accountDAO" class="com.company.dao.AccountDAOImpl">
+    <bean id="accountDAO" class="com.company.dao.impl.AccountDAOImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
     </bean>
 
-    <bean id="projectDAO" class="com.company.dao.ProjectDAOImpl">
+    <bean id="projectDAO" class="com.company.dao.impl.ProjectDAOImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
     </bean>
 
-    <bean id="developerDAO" class="com.company.dao.DeveloperDAOImpl">
+    <bean id="developerDAO" class="com.company.dao.impl.DeveloperDAOImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
     </bean>
 
-    <bean id="commentaryDAO" class="com.company.dao.commentary.CommentaryDAOImpl">
+    <bean id="commentaryDAO" class="com.company.dao.impl.CommentaryDAOImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
     </bean>
 

@@ -1,4 +1,4 @@
-package com.company.dao;
+package com.company.dao.api;
 
 import com.company.util.GenericReflector;
 import org.apache.log4j.Logger;

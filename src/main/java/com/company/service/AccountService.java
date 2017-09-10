@@ -1,6 +1,6 @@
 package com.company.service;
 
-import com.company.dao.AccountDAO;
+import com.company.dao.api.AccountDAO;
 import com.company.entity.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

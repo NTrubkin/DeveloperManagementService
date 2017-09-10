@@ -1,5 +1,7 @@
-package com.company.dao;
+package com.company.dao.impl;
 
+import com.company.dao.api.DAO;
+import com.company.dao.api.ProjectDAO;
 import com.company.domain.ProjectDomain;
 import com.company.entity.Account;
 import com.company.entity.Project;
@@ -15,10 +17,10 @@ import java.util.List;
 public class ProjectDAOImpl extends DAO<Project> implements ProjectDAO {
     private static final Logger logger = Logger.getLogger(ProjectDAOImpl.class);
 
-    private static final String SQL_SELECT_CUR_DEV_PROJECT = "SELECT p.id, p.name, p.complete, p.manager_id\n" +
+    private static final String SQL_SELECT_CUR_DEV_PROJECT = "SELECT *\n" +
             "FROM project p INNER JOIN developer d ON p.id = d.project_id\n" +
             "WHERE d.account_id = :id AND p.complete = FALSE";
-    private static final String SQL_SELECT_DEV_PROJECTS = "SELECT p.id, p.name, p.complete, p.manager_id\n" +
+    private static final String SQL_SELECT_DEV_PROJECTS = "SELECT *\n" +
             "FROM project p INNER JOIN developer d ON p.id = d.project_id\n" +
             "WHERE d.account_id = :id";
 

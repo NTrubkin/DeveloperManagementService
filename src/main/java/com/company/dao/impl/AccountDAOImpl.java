@@ -1,5 +1,7 @@
-package com.company.dao;
+package com.company.dao.impl;
 
+import com.company.dao.api.AccountDAO;
+import com.company.dao.api.DAO;
 import com.company.domain.SecureAccountDomain;
 import com.company.entity.Account;
 import com.company.entity.Role;

@@ -1,9 +1,9 @@
 package com.company.controller.rest;
 
-import com.company.dao.AccountDAO;
-import com.company.dao.DeveloperDAO;
-import com.company.dao.ProjectDAO;
-import com.company.dao.commentary.CommentaryDAO;
+import com.company.dao.api.AccountDAO;
+import com.company.dao.api.CommentaryDAO;
+import com.company.dao.api.DeveloperDAO;
+import com.company.dao.api.ProjectDAO;
 import com.company.domain.AccountDomain;
 import com.company.domain.CommentaryDomain;
 import com.company.domain.ProjectDomain;
@@ -11,7 +11,6 @@ import com.company.entity.Account;
 import com.company.entity.Commentary;
 import com.company.entity.Developer;
 import com.company.entity.Project;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -31,8 +30,6 @@ import java.util.Objects;
 @RestController
 @RequestMapping(value = "/project")
 public class ProjectController {
-    private static final Logger logger = Logger.getLogger(ProjectController.class);
-
     private static final String ROLE_DEV_CODE = "ROLE_DEV";
     private static final String ROLE_MANAGER_CODE = "ROLE_MANAGER";
 
@@ -138,8 +135,6 @@ public class ProjectController {
 
     /**
      * Создает проект в системе от имени аутентифицированного пользователя
-     * <p>
-     * todo закомментировать неипользуемые поля
      *
      * @param projectDomain
      * @param authentication
@@ -151,11 +146,14 @@ public class ProjectController {
         Account account = accountDAO.read(auth);
         projectDomain.setManagerId(account.getId());
         projectDomain.setStart(System.currentTimeMillis());
-        if (projectDomain.isComplete()) {
-            projectDomain.setEnd(System.currentTimeMillis());
+        Project currentProject = projectDAO.getCurrentManagerProject(account.getId());
+        if (currentProject == null) {
+            projectDomain.setComplete(false);
+            projectDomain.setEnd(null);
         }
         else {
-            projectDomain.setEnd(null);
+            projectDomain.setComplete(true);
+            projectDomain.setEnd(System.currentTimeMillis());
         }
         projectDAO.create(projectDomain);
         return new ResponseEntity(HttpStatus.OK);
@@ -213,7 +211,7 @@ public class ProjectController {
 
         developerDAO.deleteAllProjectDevelopers(projectId);
         project.setComplete(false);
-        project.setEnd(null);       // todo решить, следует ли определить логику управления датой завершения в сущности или оставить это здесь
+        project.setEnd(null);
         projectDAO.update(project);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -362,8 +360,8 @@ public class ProjectController {
         Account account = accountDAO.read(auth);
         Project project = projectDAO.read(projectId);
 
-        if (!project.getManager().getId().equals(account.getId()) || !developerDAO.isDeveloperOfProject(account.getId(), projectId)) {
-            return new ResponseEntity(BAD_REQ + "You are not join to project with id " + project, HttpStatus.FORBIDDEN);
+        if (!project.getManager().getId().equals(account.getId()) && !developerDAO.isDeveloperOfProject(account.getId(), projectId)) {
+            return new ResponseEntity(BAD_REQ + "You are not join to project with id " + projectId, HttpStatus.FORBIDDEN);
         }
 
         List<CommentaryDomain> commentaries = new ArrayList<>();
@@ -379,9 +377,11 @@ public class ProjectController {
         Account account = accountDAO.read(auth);
         Project project = projectDAO.read(projectId);
 
-        if (!project.getManager().getId().equals(account.getId()) || !developerDAO.isDeveloperOfProject(account.getId(), projectId)) {
-            return new ResponseEntity(BAD_REQ + "You are not join to project with id " + project, HttpStatus.FORBIDDEN);
+        if (!project.getManager().getId().equals(account.getId()) && !developerDAO.isDeveloperOfProject(account.getId(), projectId)) {
+            return new ResponseEntity(BAD_REQ + "You are not join to project with id " + projectId, HttpStatus.FORBIDDEN);
         }
+
+        commentaryDomain.setTime(System.currentTimeMillis());
 
         Commentary commentary = new Commentary(commentaryDomain, account, project);
         commentaryDAO.create(commentary);

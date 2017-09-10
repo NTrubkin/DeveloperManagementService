@@ -1,5 +1,7 @@
-package com.company.dao;
+package com.company.dao.impl;
 
+import com.company.dao.api.DAO;
+import com.company.dao.api.DeveloperDAO;
 import com.company.entity.Account;
 import com.company.entity.Developer;
 import org.apache.log4j.Logger;
@@ -149,7 +151,7 @@ public class DeveloperDAOImpl extends DAO<Developer> implements DeveloperDAO {
 
     public boolean isDeveloperOfProject(int developerId, int projectId) {
         for (Developer dev : readAll(projectId)) {
-            if (dev.getId() == developerId) {
+            if (dev.getAccount().getId() == developerId) {
                 return true;
             }
         }

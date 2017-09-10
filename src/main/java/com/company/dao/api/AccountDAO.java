@@ -1,4 +1,4 @@
-package com.company.dao;
+package com.company.dao.api;
 
 import com.company.domain.SecureAccountDomain;
 import com.company.entity.Account;

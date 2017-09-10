@@ -1,6 +1,6 @@
 package com.company.controller.rest;
 
-import com.company.dao.AccountDAO;
+import com.company.dao.api.AccountDAO;
 import com.company.domain.AccountDomain;
 import com.company.domain.SecureAccountDomain;
 import com.company.entity.Account;

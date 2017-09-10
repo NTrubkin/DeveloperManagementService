@@ -8,6 +8,8 @@ public class CommentaryDomain {
 
     private int accountId;
 
+    private String accountNickname;
+
     private int projectId;
 
     private String text;
@@ -20,6 +22,7 @@ public class CommentaryDomain {
             this.id = commentary.getId();
             if (commentary.getAuthor() != null) {
                 this.accountId = commentary.getAuthor().getId();
+                this.accountNickname = commentary.getAuthor().getNickname();
             }
             if (commentary.getProject() != null) {
                 this.projectId = commentary.getProject().getId();
@@ -58,5 +61,13 @@ public class CommentaryDomain {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public String getAccountNickname() {
+        return accountNickname;
+    }
+
+    public void setAccountNickname(String accountNickname) {
+        this.accountNickname = accountNickname;
     }
 }

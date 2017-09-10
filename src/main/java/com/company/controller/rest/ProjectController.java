@@ -365,8 +365,8 @@ public class ProjectController {
         Account account = accountDAO.read(auth);
         Project project = projectDAO.read(projectId);
 
-        if (!project.getManager().getId().equals(account.getId()) || !developerDAO.isDeveloperOfProject(account.getId(), projectId)) {
-            return new ResponseEntity(BAD_REQ + "You are not join to project with id " + project, HttpStatus.FORBIDDEN);
+        if (!project.getManager().getId().equals(account.getId()) && !developerDAO.isDeveloperOfProject(account.getId(), projectId)) {
+            return new ResponseEntity(BAD_REQ + "You are not join to project with id " + projectId, HttpStatus.FORBIDDEN);
         }
 
         List<CommentaryDomain> commentaries = new ArrayList<>();
@@ -382,8 +382,9 @@ public class ProjectController {
         Account account = accountDAO.read(auth);
         Project project = projectDAO.read(projectId);
 
-        if (!project.getManager().getId().equals(account.getId()) || !developerDAO.isDeveloperOfProject(account.getId(), projectId)) {
-            return new ResponseEntity(BAD_REQ + "You are not join to project with id " + project, HttpStatus.FORBIDDEN);
+
+        if (!project.getManager().getId().equals(account.getId()) && !developerDAO.isDeveloperOfProject(account.getId(), projectId)) {
+            return new ResponseEntity(BAD_REQ + "You are not join to project with id " + projectId, HttpStatus.FORBIDDEN);
         }
 
         Commentary commentary = new Commentary(commentaryDomain, account, project);

@@ -151,7 +151,7 @@ public class DeveloperDAOImpl extends DAO<Developer> implements DeveloperDAO {
 
     public boolean isDeveloperOfProject(int developerId, int projectId) {
         for (Developer dev : readAll(projectId)) {
-            if (dev.getId() == developerId) {
+            if (dev.getAccount().getId() == developerId) {
                 return true;
             }
         }

@@ -1,0 +1,38 @@
+#chatPanel {
+    width: 775px;
+}
+
+#newText {
+    margin: 8px 0px;
+    width: 720px
+}
+
+.comment {
+    margin: 8px 0px;
+    padding: 4px 0px;
+    background-color: white;
+}
+
+.comment div{
+    display: inline-block;
+    vertical-align: top;
+}
+
+.sender {
+    width: 100px;
+    text-align: right;
+    font-weight: bold;
+    color: #6988A4;
+}
+
+.time {
+    width: 50px;
+    text-align: center;
+    font-size: 11;
+    color: #6988A4;
+}
+
+.text {
+    width: 600px;
+    margin: 0px 8px;
+}

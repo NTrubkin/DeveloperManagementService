@@ -4,8 +4,7 @@
 <head>
     <title>DMS: Developer</title>
 </head>
-<body
-">
+<body>
 <%@include file="../header.jsp" %>
 <%@include file="menu.jsp" %>
 

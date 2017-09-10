@@ -14,6 +14,8 @@ public class CommentaryDomain {
 
     private String text;
 
+    private long time;
+
     public CommentaryDomain() {
     }
 
@@ -28,6 +30,7 @@ public class CommentaryDomain {
                 this.projectId = commentary.getProject().getId();
             }
             this.text = commentary.getText();
+            this.time = commentary.getTime().getTime();
         }
     }
 
@@ -69,5 +72,13 @@ public class CommentaryDomain {
 
     public void setAccountNickname(String accountNickname) {
         this.accountNickname = accountNickname;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
     }
 }

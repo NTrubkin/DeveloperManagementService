@@ -1,10 +1,10 @@
 #chatPanel {
-    width: 775px;
+    width: 780px;
 }
 
 #newText {
     margin: 8px 0px;
-    width: 720px
+    width: 725px
 }
 
 .comment {
@@ -26,7 +26,7 @@
 }
 
 .time {
-    width: 50px;
+    width: 55px;
     text-align: center;
     font-size: 11;
     color: #6988A4;

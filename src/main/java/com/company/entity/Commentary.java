@@ -3,6 +3,7 @@ package com.company.entity;
 import com.company.domain.CommentaryDomain;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "commentary", schema = "public", catalog = "postgres")
@@ -23,6 +24,9 @@ public class Commentary {
     @Column(name = "text")
     private String text;
 
+    @Column(name = "time")
+    private Timestamp time;
+
     public Commentary() {
     }
 
@@ -32,6 +36,7 @@ public class Commentary {
             this.text = commentaryDomain.getText();
             this.author = author;
             this.project = project;
+            this.time = new Timestamp(commentaryDomain.getTime());
         }
     }
 
@@ -65,5 +70,13 @@ public class Commentary {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public Timestamp getTime() {
+        return time;
+    }
+
+    public void setTime(Timestamp time) {
+        this.time = time;
     }
 }

@@ -51,7 +51,7 @@ function formCommentsFromJson(json) {
         var div = "<div class='comment'>" +
             "<div class='sender'>" + json[i].accountNickname + "</div>" +
             "<div class='text'>" + json[i].text + "</div>" +
-            "<div class='time'>11.09.17<br>10:03</div>" +
+            "<div class='time'>" + formatTime(new Date(json[i].time)) + "</div>" +
             "</div>";
         comments.append(div);
     }
@@ -79,4 +79,8 @@ function sendCommentary() {
             }
         });
     }
+}
+
+function formatTime(time) {
+    return time.toLocaleDateString() + "<br>" + time.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
 }

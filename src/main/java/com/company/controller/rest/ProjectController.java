@@ -382,10 +382,11 @@ public class ProjectController {
         Account account = accountDAO.read(auth);
         Project project = projectDAO.read(projectId);
 
-
         if (!project.getManager().getId().equals(account.getId()) && !developerDAO.isDeveloperOfProject(account.getId(), projectId)) {
             return new ResponseEntity(BAD_REQ + "You are not join to project with id " + projectId, HttpStatus.FORBIDDEN);
         }
+
+        commentaryDomain.setTime(System.currentTimeMillis());
 
         Commentary commentary = new Commentary(commentaryDomain, account, project);
         commentaryDAO.create(commentary);

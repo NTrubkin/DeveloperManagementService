@@ -43,6 +43,7 @@ CREATE TABLE public.commentary
   author_id  INT                NOT NULL,
   project_id INT                NOT NULL,
   text       VARCHAR(200)       NOT NULL,
+  time         TIMESTAMP          NOT NULL,
   CONSTRAINT developer_project_id_fk FOREIGN KEY (project_id) REFERENCES project (id) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT author_account_id_fk FOREIGN KEY (author_id) REFERENCES account (id) ON DELETE CASCADE ON UPDATE CASCADE
 )

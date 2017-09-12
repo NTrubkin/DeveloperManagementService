@@ -9,7 +9,7 @@
     <spring:url value="/resources/css/dialog.css" var="dialogCSS"/>
     <link href="${dialogCSS}" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body onload="selectMenuItem('createItem')">
 <%@include file="../header.jsp" %>
 <%@include file="menu.jsp" %>
 

@@ -47,6 +47,11 @@
     font-size: 13px;
 }
 
+button:disabled,
+button[disabled]{
+    color: #666666;
+}
+
 .loginButton {
     padding: 0px 16px;
 }

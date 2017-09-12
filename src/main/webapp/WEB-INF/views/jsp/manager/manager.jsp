@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>DMS: Manager</title>
-/head>
+</head>
 <body>
 <%@include file="../header.jsp" %>
 <%@include file="menu.jsp" %>

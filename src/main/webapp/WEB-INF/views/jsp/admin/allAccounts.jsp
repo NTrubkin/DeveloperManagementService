@@ -9,7 +9,7 @@
     <spring:url value="/resources/css/table.css" var="tableCSS"/>
     <link href="${tableCSS}" rel="stylesheet" type="text/css">
 </head>
-<body onload="formAccountsTable();">
+<body onload="selectMenuItem('allItem'); formAccountsTable();">
 <%@include file="../header.jsp" %>
 <%@include file="menu.jsp" %>
 

@@ -8,8 +8,12 @@
 <c:set var="urlPrefix" value="${fn:substring(url, 0, fn:length(url) - fn:length(uri))}${req.contextPath}"/>
 <html>
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <spring:url value="/resources/css/header.css" var="headerCSS"/>
     <link href="${headerCSS}" rel="stylesheet" type="text/css">
+    <spring:url value="/resources/js/header.js" var="headerJS"/>
+    <script src="${headerJS}"></script>
+
 </head>
 <body id="body">
 <div id="header">
@@ -18,9 +22,9 @@
             SYSTEM</strong></button>
     </div>
     <div id="centerHeader">
-        <button onclick="location.href = '${urlPrefix}${'/admin'}'" class="button">ADMIN</button>
-        <button onclick="location.href = '${urlPrefix}${'/manager'}'" class="button">MANAGER</button>
-        <button onclick="location.href = '${urlPrefix}${'/developer'}'" class="button">DEVELOPER</button>
+        <button onclick="location.href = '${urlPrefix}${'/admin'}'" class="button" id="adminButton" disabled>ADMIN</button>
+        <button onclick="location.href = '${urlPrefix}${'/manager'}'" class="button" id="managerButton" disabled>MANAGER</button>
+        <button onclick="location.href = '${urlPrefix}${'/developer'}'" class="button" id="devButton" disabled>DEVELOPER</button>
     </div>
     <div id="rightHeader">
         <button onclick="location.href = '${urlPrefix}${'/login'}'" class="button"><img

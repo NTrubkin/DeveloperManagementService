@@ -17,7 +17,7 @@
     <spring:url value="/resources/js/manager/info.js" var="managerJS"/>
     <script src="${managerJS}"></script>
 </head>
-<body onload="init()">
+<body onload="selectMenuItem('infoItem'); init();">
 <%@include file="../header.jsp" %>
 <%@include file="menu.jsp" %>
 

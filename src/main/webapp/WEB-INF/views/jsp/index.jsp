@@ -12,6 +12,8 @@
 </head>
 <body>
 <%@include file="header.jsp" %>
-<h1>Home page</h1>
+<div class="content">
+    <h1>Welcome to the home page</h1>
+</div>
 </body>
 </html>

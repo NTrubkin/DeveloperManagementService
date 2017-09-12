@@ -27,7 +27,7 @@
         }
     </style>
 </head>
-<body onload="formChatPanel();">
+<body onload="selectMenuItem('chatItem'); formChatPanel();">
 <%@include file="../header.jsp" %>
 <%@include file="menu.jsp" %>
 

@@ -12,18 +12,13 @@ function enableButtons() {
             switch(result.roleId) {
                 case 1:
                     document.getElementById("adminButton").disabled = false;
-                    console.log("1");
                     return;
                 case 2:
                     document.getElementById("managerButton").disabled = false;
-                    console.log("2");
                     return;
                 case 3:
                     document.getElementById("devButton").disabled = false;
-                    console.log("3");
                     return;
-                default:
-                    console.log("!");
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {

@@ -30,10 +30,19 @@
 }
 
 #rightHeader {
-    width: 60;
-    height: inherit;
+    height: 50px;
     font-family: Arial;
     float: right;
+}
+
+#login {
+    vertical-align: top;
+    display: inline-block;
+}
+
+#user {
+    vertical-align: top;
+    display: inline-block;
 }
 
 .button {
@@ -47,13 +56,8 @@
     font-size: 13px;
 }
 
-button:disabled,
-button[disabled]{
-    color: #666666;
-}
-
-.loginButton {
-    padding: 0px 16px;
+.navButton {
+    display: none;
 }
 
 .content {

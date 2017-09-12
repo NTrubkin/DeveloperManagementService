@@ -22,12 +22,18 @@
             SYSTEM</strong></button>
     </div>
     <div id="centerHeader">
-        <button onclick="location.href = '${urlPrefix}${'/admin'}'" class="button" id="adminButton" disabled>ADMIN</button>
-        <button onclick="location.href = '${urlPrefix}${'/manager'}'" class="button" id="managerButton" disabled>MANAGER</button>
-        <button onclick="location.href = '${urlPrefix}${'/developer'}'" class="button" id="devButton" disabled>DEVELOPER</button>
+        <button onclick="location.href = '${urlPrefix}${'/admin'}'" class="button navButton" id="adminButton">ADMIN
+        </button>
+        <button onclick="location.href = '${urlPrefix}${'/manager'}'" class="button navButton" id="managerButton">
+            MANAGER
+        </button>
+        <button onclick="location.href = '${urlPrefix}${'/developer'}'" class="button navButton" id="devButton">
+            DEVELOPER
+        </button>
     </div>
     <div id="rightHeader">
-        <button onclick="location.href = '${urlPrefix}${'/login'}'" class="button"><img
+        <p id="user"></p>
+        <button onclick="location.href = '${urlPrefix}${'/login'}'" class="button" id="login"><img
                 src="${urlPrefix}${'/resources/icons/login.png'}"/></button>
     </div>
 </div>

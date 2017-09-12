@@ -1,22 +1,23 @@
 var prefix = '/developer-management-service-1.0-SNAPSHOT';
-document.addEventListener('DOMContentLoaded', enableButtons(), false);
+document.addEventListener('DOMContentLoaded', init(), false);
 
-function enableButtons() {
+function init() {
     $.ajax({
         type: 'GET',
         url: prefix + '/account/',
         dataType: 'json',
         async: true,
         success: function (result) {
+            document.getElementById("user").innerHTML = result.nickname;
             switch(result.roleId) {
                 case 1:
-                    document.getElementById("adminButton").disabled = false;
+                    document.getElementById("adminButton").style.display = 'block';
                     return;
                 case 2:
-                    document.getElementById("managerButton").disabled = false;
+                    document.getElementById("managerButton").style.display = 'block';
                     return;
                 case 3:
-                    document.getElementById("devButton").disabled = false;
+                    document.getElementById("devButton").style.display = 'block';
                     return;
             }
         },

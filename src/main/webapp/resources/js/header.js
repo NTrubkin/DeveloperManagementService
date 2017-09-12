@@ -1,5 +1,4 @@
 var prefix = '/developer-management-service-1.0-SNAPSHOT';
-
 document.addEventListener('DOMContentLoaded', enableButtons(), false);
 
 function enableButtons() {

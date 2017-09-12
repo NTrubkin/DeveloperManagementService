@@ -46,11 +46,11 @@
 
     <global-method-security jsr250-annotations="enabled" pre-post-annotations="enabled" secured-annotations="enabled"/>
 
+    <beans:bean id="authSuccessHandler" class="com.company.service.AuthSuccessHandler" lazy-init="false"/>
+
     <authentication-manager alias="authenticationManager">
         <authentication-provider user-service-ref="accountService">
             <password-encoder hash="sha"/>
         </authentication-provider>
     </authentication-manager>
-
-    <beans:bean id="authSuccessHandler" class="com.company.service.AuthSuccessHandler" />
 </beans:beans>

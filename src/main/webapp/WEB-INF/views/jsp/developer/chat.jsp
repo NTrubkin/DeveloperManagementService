@@ -9,6 +9,8 @@
     <script src="${chatJS}"></script>
     <spring:url value="/resources/css/chat.css" var="chatCSS"/>
     <link href="${chatCSS}" rel="stylesheet" type="text/css">
+    <spring:url value="/resources/js/developer.js" var="developerJS"/>
+    <script src="${developerJS}"></script>
 
     <style>
         #chatPanel {
@@ -20,7 +22,7 @@
         }
     </style>
 </head>
-<body onload="selectMenuItem('chatItem'); formChatPanel();">
+<body onload="selectMenuItem('chatItem'); formChat();">
 <%@include file="../header.jsp" %>
 <%@include file="menu.jsp" %>
 

@@ -71,12 +71,12 @@ public interface ProjectDAO {
     List<Project> readAllManagerProjects(int managerId);
 
     /**
-     * Возвращает текущий активный проект менеджера с managerId
+     * Возвращает текущие активные проекты менеджера с managerId
      *
      * @param managerId
      * @return
      */
-    Project getCurrentManagerProject(int managerId);
+    List<Project> getCurrentManagerProjects(int managerId);
 
     /**
      * Возвращает текущий активный проект разработчика с managerId

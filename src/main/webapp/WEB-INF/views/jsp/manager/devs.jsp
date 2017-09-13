@@ -16,8 +16,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <spring:url value="/resources/js/manager/devs.js" var="managerJS"/>
     <script src="${managerJS}"></script>
-    <spring:url value="/resources/js/manager/checkCurrentProject.js" var="checkCurrentProjectJS"/>
-    <script src="${checkCurrentProjectJS}"></script>
+    <spring:url value="/resources/css/dialog.css" var="dialogCSS"/>
+    <link href="${dialogCSS}" rel="stylesheet" type="text/css">
 
     <style>
         #noneTables {
@@ -38,16 +38,29 @@
         }
     </style>
 </head>
-<body onload="selectMenuItem('devsItem'); init()">
+<body onload="selectMenuItem('devsItem'); init(${projectId})">
 <%@include file="../header.jsp" %>
 <%@include file="menu.jsp" %>
 
 <div class="content">
+    <div>
+        <table class="dialog">
+            <tr>
+                <td class="question">Select Project</td>
+                <td class="answer">
+                    <select id="projectSelector" onchange="onSelectorChanged()">
+                        <option value="0">-</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+
     <div id="noneTables">
-        There is no current project
     </div>
     <div id="devsTables">
         <div id="devsInProject">
+            <p>In project</p>
             <table id="devsInProjectTable" class="table">
                 <tr>
                     <th>ID</th>
@@ -57,6 +70,7 @@
             </table>
         </div>
         <div id="availDevs">
+            <p>Available</p>
             <table id="availDevsTable" class="table">
                 <tr>
                     <th>ID</th>

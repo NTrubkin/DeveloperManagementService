@@ -16,8 +16,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <spring:url value="/resources/js/manager/allProjects.js" var="managerJS"/>
     <script src="${managerJS}"></script>
-    <spring:url value="/resources/js/manager/checkCurrentProject.js" var="checkCurrentProjectJS"/>
-    <script src="${checkCurrentProjectJS}"></script>
 </head>
 <body onload="selectMenuItem('allItem'); init();">
 <%@include file="../header.jsp" %>
@@ -31,7 +29,6 @@
             <th>Estimated end</th>
             <th>End</th>
             <th>Complete</th>
-            <th></th>
         </tr>
     </table>
 </div>

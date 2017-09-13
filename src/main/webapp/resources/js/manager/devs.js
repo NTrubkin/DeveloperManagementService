@@ -1,23 +1,24 @@
 var prefix = '/developer-management-service-1.0-SNAPSHOT';
-
-function init() {
-    chechCurrentProject();
-    if (isCurrentProjectExists) {
+var projectId = 0;
+function init(projectToOpen) {
+    projectId = projectToOpen;
+    formProjectsComboBox();
+    if (projectId === 0) {
+        document.getElementById('devsTables').style.display = 'none';
+        document.getElementById('noneTables').style.display = 'block';
+    }
+    else {
         formProjectDevelopersTable();
         formAvailableDevelopersTable();
         document.getElementById('noneTables').style.display = 'none';
         document.getElementById('devsTables').style.display = 'block';
-    }
-    else {
-        document.getElementById('devsTables').style.display = 'none';
-        document.getElementById('noneTables').style.display = 'block';
     }
 }
 
 function formProjectDevelopersTable() {
     $.ajax({
         type: 'GET',
-        url: prefix + '/project/' + currentProjectId + '/dev/all',
+        url: prefix + '/project/' + projectId + '/dev/all',
         dataType: 'json',
         async: false,
         success: function (result) {
@@ -59,7 +60,7 @@ function formProjectDevelopersTableFromJson(json, tableId, action, label) {
 function addToCurrentProject(devId) {
     $.ajax({
         type: 'POST',
-        url: prefix + '/project/' + currentProjectId + '/dev/' + devId,
+        url: prefix + '/project/' + projectId + '/dev/' + devId,
         async: true,
         success: function () {
             window.location.reload();
@@ -73,7 +74,7 @@ function addToCurrentProject(devId) {
 function removeFromCurrentProject(devId) {
     $.ajax({
         type: 'DELETE',
-        url: prefix + '/project/' + currentProjectId + '/dev/' + devId,
+        url: prefix + '/project/' + projectId + '/dev/' + devId,
         async: true,
         success: function () {
             window.location.reload();
@@ -82,4 +83,32 @@ function removeFromCurrentProject(devId) {
             alert(jqXHR.status + ' ' + jqXHR.responseText);
         }
     });
+}
+
+function formProjectsComboBox() {
+    $.ajax({
+        type: 'GET',
+        url: prefix + '/project/',
+        dataType: 'json',
+        async: false,
+        success: function (result) {
+            formProjectsComboBoxFromJson(result);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert(jqXHR.status + ' ' + jqXHR.responseText);
+        }
+    });
+}
+
+function formProjectsComboBoxFromJson(result) {
+    for(var i = 0; i < result.length; i++) {
+        $('#projectSelector')
+            .append($("<option></option>")
+                .attr("value",result[i].id)
+                .text("#" + result[i].id + ":" + result[i].name));
+    }
+}
+
+function onSelectorChanged() {
+    window.location.replace(prefix + '/manager/devs/' + $('#projectSelector').val());
 }

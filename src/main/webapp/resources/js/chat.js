@@ -1,48 +1,26 @@
 var prefix = '/developer-management-service-1.0-SNAPSHOT';
-var currentProjectId = 0;
+var projectId = 0;
 
-function formChatPanel() {
+function formChatPanel(projId) {
+    console.log(projId);
+    projectId = projId;
+    document.getElementById('chatPanel').style.display = 'block';
+    showCommentaries();
+}
+
+function showCommentaries() {
     $.ajax({
         type: 'GET',
-        url: prefix + '/project/',
+        url: prefix + '/project/' + projectId + '/comment/all/',
         dataType: 'json',
-        async: true,
+        async: false,
         success: function (result) {
-            if (result.id === 0) {
-                document.getElementById('chatPanel').style.display = 'none';
-                document.getElementById('nonePanel').style.display = 'block';
-            }
-            else {
-                currentProjectId = result.id;
-                showCommentaries();
-                document.getElementById('nonePanel').style.display = 'none';
-                document.getElementById('chatPanel').style.display = 'block';
-            }
+            formCommentsFromJson(result);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             alert(jqXHR.status + ' ' + jqXHR.responseText);
         }
     });
-}
-
-function showCommentaries() {
-    if (currentProjectId === 0) {
-        alert('invalid current project');
-    }
-    else {
-        $.ajax({
-            type: 'GET',
-            url: prefix + '/project/' + currentProjectId + '/comment/all/',
-            dataType: 'json',
-            async: false,
-            success: function (result) {
-                formCommentsFromJson(result);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                alert(jqXHR.status + ' ' + jqXHR.responseText);
-            }
-        });
-    }
 }
 
 function formCommentsFromJson(json) {
@@ -58,27 +36,22 @@ function formCommentsFromJson(json) {
 }
 
 function sendCommentary() {
-    if (currentProjectId === 0) {
-        alert('invalid current project');
-    }
-    else {
-        var comment = {
-            'text': $("#newText").val()
-        };
-        $.ajax({
-            type: 'POST',
-            url: prefix + '/project/' + currentProjectId + '/comment/',
-            contentType: 'application/json; charset=utf-8',
-            async: true,
-            data: JSON.stringify(comment),
-            success: function (result) {
-                window.location.reload();
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                alert(jqXHR.status + ' ' + jqXHR.responseText);
-            }
-        });
-    }
+    var comment = {
+        'text': $("#newText").val()
+    };
+    $.ajax({
+        type: 'POST',
+        url: prefix + '/project/' + projectId + '/comment/',
+        contentType: 'application/json; charset=utf-8',
+        async: true,
+        data: JSON.stringify(comment),
+        success: function (result) {
+            window.location.reload();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert(jqXHR.status + ' ' + jqXHR.responseText);
+        }
+    });
 }
 
 function formatTime(time) {

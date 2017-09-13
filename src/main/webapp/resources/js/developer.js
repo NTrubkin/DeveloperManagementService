@@ -7,16 +7,16 @@ function formCurrentProjectPanel() {
         dataType: 'json',
         async: true,
         success: function (result) {
-            if (result.id === 0) {
+            if (result.length === 0) {
                 document.getElementById('notNullCurProjectPanel').style.display = 'none';
                 document.getElementById('nullCurProjectPanel').style.display = 'block';
             }
             else {
-                $('#projectId').append(result.id);
-                $('#projectName').append(result.name);
-                var start = new Date(result.start);
+                $('#projectId').append(result[0].id);
+                $('#projectName').append(result[0].name);
+                var start = new Date(result[0].start);
                 $('#projectStart').append(start.toLocaleString());
-                var estEnd = new Date(result.estimatedEnd);
+                var estEnd = new Date(result[0].estimatedEnd);
                 $('#projectEstEnd').append(estEnd.toLocaleString());
                 document.getElementById('nullCurProjectPanel').style.display = 'none';
                 document.getElementById('notNullCurProjectPanel').style.display = 'block';
@@ -60,4 +60,24 @@ function formProjectsTableFromJson(json) {
         tr.append("<td>" + json[i].complete + "</td>");
         $('#projects').append(tr);
     }
+}
+
+function formChat() {
+    $.ajax({
+        type: 'GET',
+        url: prefix + '/project/',
+        dataType: 'json',
+        async: false,
+        success: function (result) {
+            if(result.length === 0) {
+                document.getElementById('nonePanel').style.display = 'block';
+            }
+            else {
+                formChatPanel(result[0].id);
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert(jqXHR.status + ' ' + jqXHR.responseText);
+        }
+    });
 }

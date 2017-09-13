@@ -28,7 +28,7 @@
         <intercept-url pattern="\/project\/?" access="hasRole('ROLE_MANAGER')" method="POST"/>
         <intercept-url pattern="\/project\/[0-9]{1,}\/?" access="hasRole('ROLE_MANAGER')" method="DELETE"/>
         <intercept-url pattern="\/project\/[0-9]{1,}\/active\/?" access="hasRole('ROLE_MANAGER')" method="PUT"/>
-        <intercept-url pattern="\/project\/current\/complete\/?" access="hasRole('ROLE_MANAGER')" method="PUT"/>
+        <intercept-url pattern="\/project\/[0-9]{1,}\/complete\/?" access="hasRole('ROLE_MANAGER')" method="PUT"/>
         <intercept-url pattern="\/project\/[0-9]{1,}\/dev\/[0-9]{1,}\/?" access="hasRole('ROLE_MANAGER')"
                        method="POST"/>
         <intercept-url pattern="\/project\/[0-9]{1,}\/dev\/[0-9]{1,}\/?" access="hasRole('ROLE_MANAGER')"

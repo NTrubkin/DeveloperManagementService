@@ -9,11 +9,35 @@
 <html>
 <head>
     <title>Title</title>
+
+    <style>
+        #greetingText {
+            color: black;
+            width: 960px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 50px;
+            float: none;
+            font-size: 18;
+        }
+    </style>
 </head>
 <body>
 <%@include file="header.jsp" %>
-<div class="content">
-    <h1>Welcome to the home page</h1>
-</div>
+    <div class="content" id="greetingText">
+        <p>
+            <strong style="color: #2d557f">Developer Management System</strong> is a powerful platform designed to help plan, organize, and manage team developing resources. It makes communication and collaboration on projects really simple.
+        </p>
+        <strong style="color: #2d557f">Features:</strong>
+        <ul>
+            <li>Web-based platform</li>
+            <li>User roles (administrator, project manager, developer)</li>
+            <li>Multitasking</li>
+            <li>Project history and planning</li>
+            <li>Team chat</li>
+            <li>Security (powered by Spring Security 4)</li>
+        </ul>
+        <p>Developed by Trubkin Nikita and mentored by Artem Gudkov at NetCracker summer courses.</p>
+    </div>
 </body>
 </html>

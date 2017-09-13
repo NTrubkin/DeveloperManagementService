@@ -13,6 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Переопределяет стандартный AuthSuccessHandler
+ * Это необходимо для настройки редиректа при успешном логине на соответствующую роли пользователя страницу
+ */
 public class AuthSuccessHandler implements AuthenticationSuccessHandler {
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();

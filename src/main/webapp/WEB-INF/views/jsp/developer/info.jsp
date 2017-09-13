@@ -26,7 +26,7 @@
         }
     </style>
 </head>
-<body onload="formCurrentProjectPanel();">
+<body onload="selectMenuItem('infoItem'); formCurrentProjectPanel();">
 <%@include file="../header.jsp" %>
 <%@include file="menu.jsp" %>
 

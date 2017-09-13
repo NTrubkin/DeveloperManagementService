@@ -41,9 +41,12 @@
                        method="POST"/>
 
         <csrf disabled="true"/>
+        <form-login authentication-success-handler-ref="authSuccessHandler" />
     </http>
 
     <global-method-security jsr250-annotations="enabled" pre-post-annotations="enabled" secured-annotations="enabled"/>
+
+    <beans:bean id="authSuccessHandler" class="com.company.service.AuthSuccessHandler" lazy-init="false"/>
 
     <authentication-manager alias="authenticationManager">
         <authentication-provider user-service-ref="accountService">

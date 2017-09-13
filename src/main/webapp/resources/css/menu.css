@@ -16,3 +16,9 @@
     border: none;
     color: white;
 }
+
+.menuItem[disabled]{
+    background-color: #ecf0f1;
+    color: #6988A4;
+    font-weight: bold;
+}

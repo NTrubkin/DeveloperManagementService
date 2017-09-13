@@ -139,6 +139,7 @@ public class ProjectController {
      * @param projectDomain
      * @param authentication
      * @return HttpStatus.OK, если успех,
+     * если estimated end уже прошел, HttpStatus.BAD_REQUEST
      */
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public ResponseEntity createProject(@RequestBody ProjectDomain projectDomain, Authentication authentication) {
@@ -154,6 +155,10 @@ public class ProjectController {
         else {
             projectDomain.setComplete(true);
             projectDomain.setEnd(System.currentTimeMillis());
+        }
+
+        if(projectDomain.getEstimatedEnd() < System.currentTimeMillis()) {
+            return new ResponseEntity("You are trying to create project with estimated end in the past", HttpStatus.BAD_REQUEST);
         }
         projectDAO.create(projectDomain);
         return new ResponseEntity(HttpStatus.OK);

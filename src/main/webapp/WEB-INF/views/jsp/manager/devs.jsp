@@ -38,7 +38,7 @@
         }
     </style>
 </head>
-<body onload="init()">
+<body onload="selectMenuItem('devsItem'); init()">
 <%@include file="../header.jsp" %>
 <%@include file="menu.jsp" %>
 

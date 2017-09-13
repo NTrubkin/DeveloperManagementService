@@ -17,7 +17,7 @@
     <spring:url value="/resources/js/manager/create.js" var="managerJS"/>
     <script src="${managerJS}"></script>
 </head>
-<body>
+<body onload="selectMenuItem('createItem');">
 <%@include file="../header.jsp" %>
 <%@include file="menu.jsp" %>
 

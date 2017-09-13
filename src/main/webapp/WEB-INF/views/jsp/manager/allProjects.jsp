@@ -19,7 +19,7 @@
     <spring:url value="/resources/js/manager/checkCurrentProject.js" var="checkCurrentProjectJS"/>
     <script src="${checkCurrentProjectJS}"></script>
 </head>
-<body onload="init()">
+<body onload="selectMenuItem('allItem'); init();">
 <%@include file="../header.jsp" %>
 <%@include file="menu.jsp" %>
 <div class="content">

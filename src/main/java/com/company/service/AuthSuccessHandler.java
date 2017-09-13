@@ -1,12 +1,10 @@
 package com.company.service;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,11 +47,13 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
         String role = authentication.getAuthorities().toString();
 
         String targetUrl = "";
-        if(role.contains("ROLE_ADMIN")) {
+        if (role.contains("ROLE_ADMIN")) {
             targetUrl = "/admin/";
-        } else if(role.contains("ROLE_MANAGER")) {
+        }
+        else if (role.contains("ROLE_MANAGER")) {
             targetUrl = "/manager/";
-        } else if(role.contains("ROLE_DEV")) {
+        }
+        else if (role.contains("ROLE_DEV")) {
             targetUrl = "/developer/";
         }
         return targetUrl;
@@ -70,6 +70,7 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
     public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
         this.redirectStrategy = redirectStrategy;
     }
+
     protected RedirectStrategy getRedirectStrategy() {
         return redirectStrategy;
     }

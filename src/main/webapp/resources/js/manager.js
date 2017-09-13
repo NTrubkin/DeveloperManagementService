@@ -27,7 +27,7 @@ var createProject = function () {
             window.location.reload();
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert(jqXHR.status + ' ' + jqXHR.responseText);
+            alert(jqXHR.responseText);
         }
     });
 };
@@ -47,7 +47,7 @@ function formProjectsTable() {
             formProjectsTableFromJson(result);
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert(jqXHR.status + ' ' + jqXHR.responseText);
+            alert(jqXHR.responseText);
         }
     });
 }
@@ -83,7 +83,7 @@ function reopen(id) {
             window.location.reload();
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert(jqXHR.status + ' ' + jqXHR.responseText);
+            alert(jqXHR.responseText);
         }
     });
 }
@@ -111,7 +111,7 @@ function formCurrentProjectPanel() {
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert(jqXHR.status + ' ' + jqXHR.responseText);
+            alert(jqXHR.responseText);
         }
     });
 }
@@ -126,7 +126,7 @@ function completeCurrentProject() {
                 window.location.reload();
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                alert(jqXHR.status + ' ' + jqXHR.responseText);
+                alert(jqXHR.responseText);
             }
         });
     }
@@ -142,7 +142,7 @@ function formProjectDevelopersTable() {
             formProjectDevelopersTableFromJson(result, 'devs', 'removeFromCurrentProject', 'remove');
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert(jqXHR.status + ' ' + jqXHR.responseText);
+            alert(jqXHR.responseText);
         }
     });
 }
@@ -157,7 +157,7 @@ function formAvailableDevelopersTable() {
             formProjectDevelopersTableFromJson(result, 'avDevs', 'addToCurrentProject', 'add');
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert(jqXHR.status + ' ' + jqXHR.responseText);
+            alert(jqXHR.responseText);
         }
     });
 }
@@ -183,7 +183,7 @@ function addToCurrentProject(devId) {
             window.location.reload();
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert(jqXHR.status + ' ' + jqXHR.responseText);
+            alert(jqXHR.responseText);
         }
     });
 }
@@ -197,7 +197,7 @@ function removeFromCurrentProject(devId) {
             window.location.reload();
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert(jqXHR.status + ' ' + jqXHR.responseText);
+            alert(jqXHR.responseText);
         }
     });
 }

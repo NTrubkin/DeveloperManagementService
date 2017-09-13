@@ -11,8 +11,10 @@
     text-align: right;
     width: 150;
     font-weight: bold;
+    font-size: 15;
 }
 
 .answer {
     text-align: left;
+    font-size: 15;
 }

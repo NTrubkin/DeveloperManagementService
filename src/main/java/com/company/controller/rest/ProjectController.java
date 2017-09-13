@@ -54,27 +54,35 @@ public class ProjectController {
     CommentaryDAO commentaryDAO;
 
     /**
-     * Возвращает информацию о текущем проекте аутентифицированного пользователя
-     * Текущий проект - единственный активный проект (или ни одного)
+     * Возвращает информацию о текущих проектах аутентифицированного пользователя
+     * Метод доступен менеджерам и разработчикам
+     * Разработчики получают коллекцию из одного или ни одного проекта(ограничение на кол-во активных проектов)
      *
      * @param authentication
      * @return ProjectDomain и HttpStatus.OK, если успех
-     * если текущего активного проекта не существует, пустой ProjectDomain с id 0
+     * если текущего активного проекта не существует, пустой List
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ResponseEntity<ProjectDomain> getCurrentProject(Authentication authentication) {
+    public ResponseEntity<List<ProjectDomain>> getCurrentProject(Authentication authentication) {
         String auth = authentication.getName();
         Account account = accountDAO.read(auth);
         int authId = account.getId();
 
+        List<ProjectDomain> projectDomains = new ArrayList<>();
         switch (account.getRole().getCode()) {
             case ROLE_MANAGER_CODE: {
-                Project project = projectDAO.getCurrentManagerProject(authId);
-                return new ResponseEntity<>(new ProjectDomain(project), HttpStatus.OK);
+                List<Project> projects = projectDAO.getCurrentManagerProjects(authId);
+                for(Project project : projects) {
+                    projectDomains.add(new ProjectDomain(project));
+                }
+                return new ResponseEntity<>(projectDomains, HttpStatus.OK);
             }
             case ROLE_DEV_CODE: {
                 Project project = projectDAO.getCurrentDeveloperProject(authId);
-                return new ResponseEntity<>(new ProjectDomain(project), HttpStatus.OK);
+                if(project != null) {
+                    projectDomains.add(new ProjectDomain(project));
+                }
+                return new ResponseEntity<>(projectDomains, HttpStatus.OK);
             }
             default:
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
@@ -147,19 +155,11 @@ public class ProjectController {
         Account account = accountDAO.read(auth);
         projectDomain.setManagerId(account.getId());
         projectDomain.setStart(System.currentTimeMillis());
-        Project currentProject = projectDAO.getCurrentManagerProject(account.getId());
-        if (currentProject == null) {
-            projectDomain.setComplete(false);
-            projectDomain.setEnd(null);
-        }
-        else {
-            projectDomain.setComplete(true);
-            projectDomain.setEnd(System.currentTimeMillis());
-        }
-
         if(projectDomain.getEstimatedEnd() < System.currentTimeMillis()) {
             return new ResponseEntity("You are trying to create project with estimated end in the past", HttpStatus.BAD_REQUEST);
         }
+        projectDomain.setComplete(false);
+        projectDomain.setEnd(null);
         projectDAO.create(projectDomain);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -190,13 +190,13 @@ public class ProjectController {
     /**
      * Отмечает проект с id активным
      * Важно помнить, что при восстановлении проекта все разработчики исключаются из проекта.
-     * Это необходимо, чтобы избежать конфликта текущих проектов разработчиков
+     * Это необходимо, чтобы избежать конфликта текущих проектов,
+     * поскольку каждый разработчик может иметь только один активный проект
      *
      * @param projectId
      * @return HttpStatus.OK, если успех,
      * если проект с id projectId не найден HttpStatus.BAD_REQUEST,
      * если аутентифицированный аккаунт не является менеджером проекта, HttpStatus.FORBIDDEN
-     * если аутентифицированный аккаунт уже имеет активный проект, HttpStatus.BAD_REQUEST
      */
     @RequestMapping(value = "/{projectId}/active", method = RequestMethod.PUT)
     public ResponseEntity setCurrentProjectActive(@PathVariable int projectId, Authentication authentication) {
@@ -209,10 +209,6 @@ public class ProjectController {
         if (!account.getId().equals(project.getManager().getId())) {
             return new ResponseEntity(FORBID + "You are trying to set active not your project", HttpStatus.FORBIDDEN);
         }
-        Project anotherActiveProject = projectDAO.getCurrentManagerProject(account.getId());
-        if (anotherActiveProject != null) {
-            return new ResponseEntity(BAD_REQ + "You already have active project(id " + anotherActiveProject.getId() + "). Complete it!", HttpStatus.BAD_REQUEST);
-        }
 
         developerDAO.deleteAllProjectDevelopers(projectId);
         project.setComplete(false);
@@ -222,23 +218,27 @@ public class ProjectController {
     }
 
     /**
-     * Отмечает текужий проект выполненным
+     * Отмечает проект с id projectId выполненным
      *
      * @param authentication
      * @return HttpStatus.OK, если успех,
-     * если у аутентифицированного пользователя нет текущего проекта, HttpStatus.BAD_REQUEST)
+     * если проект с id projectId не найден HttpStatus.BAD_REQUEST,
+     * если аутентифицированный аккаунт не является менеджером проекта, HttpStatus.FORBIDDEN
      */
-    @RequestMapping(value = "/current/complete", method = RequestMethod.PUT)
-    public ResponseEntity setCurrentProjectComplete(Authentication authentication) {
+    @RequestMapping(value = "/{projectId}/complete", method = RequestMethod.PUT)
+    public ResponseEntity setCurrentProjectComplete(@PathVariable int projectId, Authentication authentication) {
         String auth = authentication.getName();
         Account account = accountDAO.read(auth);
-        Project currentProject = projectDAO.getCurrentManagerProject(account.getId());
-        if (currentProject == null) {
-            return new ResponseEntity(BAD_REQ + "You dont have current project", HttpStatus.BAD_REQUEST);
+        Project project = projectDAO.read(projectId);
+        if (project == null) {
+            return new ResponseEntity(BAD_REQ + "Project with id " + projectId + " is not exists", HttpStatus.BAD_REQUEST);
         }
-        currentProject.setComplete(true);
-        currentProject.setEnd(new Timestamp(System.currentTimeMillis()));
-        projectDAO.update(currentProject);
+        if(!account.getId().equals(project.getManager().getId())) {
+            return new ResponseEntity(FORBID + "You are trying to set complete not your project", HttpStatus.FORBIDDEN);
+        }
+        project.setComplete(true);
+        project.setEnd(new Timestamp(System.currentTimeMillis()));
+        projectDAO.update(project);
         return new ResponseEntity(HttpStatus.OK);
     }
 

@@ -84,12 +84,12 @@ public class ProjectDAOImpl extends DAO<Project> implements ProjectDAO {
     }
 
     /**
-     * Возвращает текущий активный проект менеджера с managerId
+     * Возвращает текущие активные проекты менеджера с managerId
      *
      * @param managerId
      * @return
      */
-    public Project getCurrentManagerProject(int managerId) {
+    public List<Project> getCurrentManagerProjects(int managerId) {
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
         try {
@@ -97,9 +97,9 @@ public class ProjectDAOImpl extends DAO<Project> implements ProjectDAO {
             Criteria criteria = session.createCriteria(Project.class);
             criteria.add(Restrictions.sqlRestriction("manager_id = " + managerId));
             criteria.add(Restrictions.eq("complete", false));
-            Project project = (Project) criteria.uniqueResult();
+            List<Project> projects = (List<Project>) criteria.list();
             transaction.commit();
-            return project;
+            return projects;
         } catch (Exception exc) {
             if (transaction != null) transaction.rollback();
             logger.error(HIBERNATE_EXC_MSG);

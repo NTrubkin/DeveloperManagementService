@@ -1,6 +1,8 @@
 package com.company.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -40,19 +42,26 @@ public class PageController {
         return "manager/create";
     }
 
-    @RequestMapping(value = "/manager/info", method = RequestMethod.GET)
-    public String showManagerProjectInfoPage() {
+    @RequestMapping(value = "/manager/info/{projectId}", method = RequestMethod.GET)
+    public String showManagerProjectInfoPage(@PathVariable int projectId, Model model) {
+        model.addAttribute("projectId", projectId);
         return "manager/info";
     }
 
-    @RequestMapping(value = "/manager/devs", method = RequestMethod.GET)
-    public String showManagerProjectDevelopersPage() {
+    @RequestMapping(value = "/manager/info", method = RequestMethod.GET)
+    public String showManagerProjectInfoPage(Model model) {
+        return showManagerProjectInfoPage(0, model);
+    }
+
+    @RequestMapping(value = "/manager/devs/{projectId}", method = RequestMethod.GET)
+    public String showManagerProjectDevelopersPage(@PathVariable int projectId, Model model) {
+        model.addAttribute("projectId", projectId);
         return "manager/devs";
     }
 
-    @RequestMapping(value = "/manager/chat", method = RequestMethod.GET)
-    public String showManagerProjectChatPage() {
-        return "manager/chat";
+    @RequestMapping(value = "/manager/devs", method = RequestMethod.GET)
+    public String showManagerProjectDevelopersPage(Model model) {
+        return showManagerProjectDevelopersPage(0, model);
     }
 
     @RequestMapping(value = "/manager/all_projects", method = RequestMethod.GET)

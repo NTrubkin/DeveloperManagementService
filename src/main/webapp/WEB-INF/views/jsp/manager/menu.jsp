@@ -12,7 +12,6 @@
     <button onclick="location.href = '${urlPrefix}${'/manager/create'}'" class="menuItem" id="createItem">Create project</button>
     <button onclick="location.href = '${urlPrefix}${'/manager/info'}'" class="menuItem" id="infoItem">Project info</button>
     <button onclick="location.href = '${urlPrefix}${'/manager/devs'}'" class="menuItem" id="devsItem">Project developers</button>
-    <button onclick="location.href = '${urlPrefix}${'/manager/chat'}'" class="menuItem" id="chatItem">Project chat</button>
     <button onclick="location.href = '${urlPrefix}${'/manager/all_projects'}'" class="menuItem" id="allItem">All projects</button>
 </div>
 </body>

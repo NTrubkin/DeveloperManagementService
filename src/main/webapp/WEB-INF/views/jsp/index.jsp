@@ -33,11 +33,10 @@
             <li>Web-based platform</li>
             <li>User roles (administrator, project manager, developer)</li>
             <li>Multitasking</li>
-            <li>Project history and planning</li>
-            <li>Team chat</li>
+            <li>Project planning and commentaries</li>
             <li>Security (powered by Spring Security 4)</li>
         </ul>
-        <p>Developed by Trubkin Nikita and mentored by Artem Gudkov at NetCracker summer courses.</p>
+        <p>Developed by Trubkin Nikita under the mentorship of Artem Gudkov at NetCracker summer courses.</p>
     </div>
 </body>
 </html>

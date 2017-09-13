@@ -16,6 +16,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <spring:url value="/resources/js/manager/info.js" var="managerJS"/>
     <script src="${managerJS}"></script>
+
+    <style>
+        #nonePanel{
+            display: none;
+        }
+        #currentProjectPanel {
+            display: none;
+        }
+    </style>
 </head>
 <body onload="selectMenuItem('infoItem'); init();">
 <%@include file="../header.jsp" %>

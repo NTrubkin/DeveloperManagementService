@@ -37,7 +37,7 @@
             <li>Team chat</li>
             <li>Security (powered by Spring Security 4)</li>
         </ul>
-        <p>Developed by Trubkin Nikita and mentored by Artem Gudkov at NetCracker summer courses.</p>
+        <p>Developed by Trubkin Nikita under the mentorship of Artem Gudkov at NetCracker summer courses.</p>
     </div>
 </body>
 </html>

@@ -16,6 +16,10 @@
     <script src="${developerJS}"></script>
     <spring:url value="/resources/css/dialog.css" var="dialogCSS"/>
     <link href="${dialogCSS}" rel="stylesheet" type="text/css">
+    <spring:url value="/resources/js/chat.js" var="chatJS"/>
+    <script src="${chatJS}"></script>
+    <spring:url value="/resources/css/chat.css" var="chatCSS"/>
+    <link href="${chatCSS}" rel="stylesheet" type="text/css">
     <style>
         #nullCurProjectPanel {
             display: none;
@@ -24,9 +28,12 @@
         #notNullCurProjectPanel {
             display: none;
         }
+        #chatPanel {
+            display: none;
+        }
     </style>
 </head>
-<body onload="selectMenuItem('infoItem'); formCurrentProjectPanel();">
+<body onload="selectMenuItem('infoItem'); formCurrentProjectPanel(); formChat();">
 <%@include file="../header.jsp" %>
 <%@include file="menu.jsp" %>
 
@@ -57,6 +64,16 @@
                 <td class="answer"><p id="projectEstEnd"></p></td>
             </tr>
         </table>
+
+        <div id="chatPanel">
+            <div id="newComment">
+                <input id="newText">
+                <button id="sendButton" onclick="sendCommentary()">send</button>
+                <hr>
+            </div>
+            <div id="comments">
+            </div>
+        </div>
     </div>
 </div>
 

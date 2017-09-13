@@ -2,7 +2,7 @@ var prefix = '/developer-management-service-1.0-SNAPSHOT';
 var projectId = 0;
 function init(projectToOpen) {
     projectId = projectToOpen;
-    formProjectsComboBox();
+    formProjectsComboBox(projectId);
     if (projectId === 0) {
         document.getElementById('devsTables').style.display = 'none';
         document.getElementById('noneTables').style.display = 'block';
@@ -25,7 +25,7 @@ function formProjectDevelopersTable() {
             formProjectDevelopersTableFromJson(result, 'devsInProjectTable', 'removeFromCurrentProject', 'remove');
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert(jqXHR.status + ' ' + jqXHR.responseText);
+            alert(jqXHR.responseText);
         }
     });
 }
@@ -40,7 +40,7 @@ function formAvailableDevelopersTable() {
             formProjectDevelopersTableFromJson(result, 'availDevsTable', 'addToCurrentProject', 'add');
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert(jqXHR.status + ' ' + jqXHR.responseText);
+            alert(jqXHR.responseText);
         }
     });
 }
@@ -66,7 +66,7 @@ function addToCurrentProject(devId) {
             window.location.reload();
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert(jqXHR.status + ' ' + jqXHR.responseText);
+            alert(jqXHR.responseText);
         }
     });
 }
@@ -80,32 +80,35 @@ function removeFromCurrentProject(devId) {
             window.location.reload();
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert(jqXHR.status + ' ' + jqXHR.responseText);
+            alert(jqXHR.responseText);
         }
     });
 }
 
-function formProjectsComboBox() {
+function formProjectsComboBox(defaultId) {
     $.ajax({
         type: 'GET',
         url: prefix + '/project/',
         dataType: 'json',
         async: false,
         success: function (result) {
-            formProjectsComboBoxFromJson(result);
+            formProjectsComboBoxFromJson(result, defaultId);
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert(jqXHR.status + ' ' + jqXHR.responseText);
+            alert(jqXHR.responseText);
         }
     });
 }
 
-function formProjectsComboBoxFromJson(result) {
+function formProjectsComboBoxFromJson(result, defaultId) {
     for(var i = 0; i < result.length; i++) {
         $('#projectSelector')
             .append($("<option></option>")
                 .attr("value",result[i].id)
-                .text("#" + result[i].id + ":" + result[i].name));
+                .text("#" + result[i].id + " : " + result[i].name));
+        if(result[i].id === defaultId) {
+            $('#projectSelector').val(defaultId);
+        }
     }
 }
 

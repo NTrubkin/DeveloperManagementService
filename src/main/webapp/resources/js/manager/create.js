@@ -26,7 +26,7 @@ var createProject = function () {
             window.location.reload();
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert(jqXHR.status + ' ' + jqXHR.responseText);
+            alert(jqXHR.responseText);
         }
     });
 };

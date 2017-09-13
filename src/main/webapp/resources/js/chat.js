@@ -2,7 +2,6 @@ var prefix = '/developer-management-service-1.0-SNAPSHOT';
 var projectId = 0;
 
 function formChatPanel(projId) {
-    console.log(projId);
     projectId = projId;
     document.getElementById('chatPanel').style.display = 'block';
     showCommentaries();
@@ -18,7 +17,7 @@ function showCommentaries() {
             formCommentsFromJson(result);
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert(jqXHR.status + ' ' + jqXHR.responseText);
+            alert(jqXHR.responseText);
         }
     });
 }
@@ -49,7 +48,7 @@ function sendCommentary() {
             window.location.reload();
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert(jqXHR.status + ' ' + jqXHR.responseText);
+            alert(jqXHR.responseText);
         }
     });
 }

@@ -23,7 +23,7 @@ function formCurrentProjectPanel() {
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert(jqXHR.status + ' ' + jqXHR.responseText);
+            alert(jqXHR.responseText);
         }
     });
 }
@@ -38,7 +38,7 @@ function formAllProjectsTable() {
             formProjectsTableFromJson(result);
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert(jqXHR.status + ' ' + jqXHR.responseText);
+            alert(jqXHR.responseText);
         }
     });
 }
@@ -77,7 +77,7 @@ function formChat() {
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert(jqXHR.status + ' ' + jqXHR.responseText);
+            alert(jqXHR.responseText);
         }
     });
 }

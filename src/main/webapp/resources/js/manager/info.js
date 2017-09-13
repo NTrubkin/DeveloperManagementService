@@ -1,7 +1,7 @@
 var prefix = '/developer-management-service-1.0-SNAPSHOT';
 
 function init(projectToOpen) {
-    formProjectsComboBox();
+    formProjectsComboBox(projectToOpen);
     if (projectToOpen === 0) {
         document.getElementById('currentProjectPanel').style.display = 'none';
         document.getElementById('nonePanel').style.display = 'block';
@@ -36,7 +36,7 @@ function formCurrentProjectPanel(projectToOpen) {
             formChatPanel(projectToOpen);
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert(jqXHR.status + ' ' + jqXHR.responseText);
+            alert(jqXHR.responseText);
         }
     });
 
@@ -51,7 +51,7 @@ function completeProject(projectId) {
             window.location.reload();
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert(jqXHR.status + ' ' + jqXHR.responseText);
+            alert(jqXHR.responseText);
         }
     });
 }
@@ -65,7 +65,7 @@ function reopenProject(projectId) {
             window.location.reload();
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert(jqXHR.status + ' ' + jqXHR.responseText);
+            alert(jqXHR.responseText);
         }
     });
 }
@@ -74,27 +74,29 @@ function onSelectorChanged() {
     window.location.replace(prefix + '/manager/info/' + $('#projectSelector').val());
 }
 
-function formProjectsComboBox() {
+function formProjectsComboBox(defaultId) {
     $.ajax({
         type: 'GET',
         url: prefix + '/project/all_my/',
         dataType: 'json',
         async: false,
         success: function (result) {
-            formProjectsComboBoxFromJson(result);
+            formProjectsComboBoxFromJson(result, defaultId);
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert(jqXHR.status + ' ' + jqXHR.responseText);
+            alert(jqXHR.responseText);
         }
     });
 }
 
-function formProjectsComboBoxFromJson(result) {
+function formProjectsComboBoxFromJson(result, defaultId) {
     for(var i = 0; i < result.length; i++) {
         $('#projectSelector')
             .append($("<option></option>")
                 .attr("value",result[i].id)
-                .text("#" + result[i].id + ":" + result[i].name));
+                .text("#" + result[i].id + " : " + result[i].name));
+        if(result[i].id === defaultId) {
+            $('#projectSelector').val(defaultId);
+        }
     }
-
 }

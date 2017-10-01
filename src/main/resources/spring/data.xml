@@ -49,7 +49,7 @@
     </bean>
 
     <bean class="java.net.URI" id="dbUrl">
-        <constructor-arg value="${DATABASE_URL}"/>
+        <constructor-arg value="#{@System.getenv('DATABASE_URL')}"/>
     </bean>
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">

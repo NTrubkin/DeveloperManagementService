@@ -1,5 +1,3 @@
-var prefix = '/developer-management-service-1.0-SNAPSHOT';
-
 var createAccount = function () {
     var account = {
         'id': 0,

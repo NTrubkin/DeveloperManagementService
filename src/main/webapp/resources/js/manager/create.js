@@ -1,5 +1,3 @@
-var prefix = '/developer-management-service-1.0-SNAPSHOT';
-
 var createProject = function () {
     // id, managerId, start, end и другие параметры будут определены на сервере автоматически
     var timeStr = $("#estEndTime").val();

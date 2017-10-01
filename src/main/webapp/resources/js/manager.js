@@ -1,4 +1,3 @@
-var prefix = '/developer-management-service-1.0-SNAPSHOT';
 var currentProjectId = 0;
 
 var createProject = function () {

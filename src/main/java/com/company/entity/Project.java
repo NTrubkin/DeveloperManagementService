@@ -10,7 +10,7 @@ import java.sql.Timestamp;
  * Проект - это некая задача профильная задача предприятия, которую назначает проект менеджер и исполняют разработчики
  */
 @Entity
-@Table(name = "project", schema = "public", catalog = "wqxzgyfo")
+@Table(name = "project", schema = "public")
 public class Project {
     @Id
     @Column(name = "id")

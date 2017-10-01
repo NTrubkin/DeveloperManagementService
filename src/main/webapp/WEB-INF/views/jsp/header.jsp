@@ -11,6 +11,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <spring:url value="/resources/css/header.css" var="headerCSS"/>
     <link href="${headerCSS}" rel="stylesheet" type="text/css">
+
+    <script>
+        var prefix = '${urlPrefix}';
+    </script>
     <spring:url value="/resources/js/header.js" var="headerJS"/>
     <script src="${headerJS}"></script>
 

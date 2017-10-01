@@ -3,9 +3,9 @@
        xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+        http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="com.company"/>
 
@@ -48,11 +48,18 @@
         </property>
     </bean>
 
+    <!--
+    Требуется переменная окружения DATABASE_URL со значением адреса и реквизитов базы данных
+    -->
+    <bean class="java.net.URI" id="dbUrl">
+        <constructor-arg value="#{systemEnvironment['DATABASE_URL']}"/>
+    </bean>
+
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close">
         <property name="driverClassName" value="org.postgresql.Driver"/>
-        <property name="url" value="jdbc:postgresql://packy.db.elephantsql.com:5432/wqxzgyfo"/>
-        <property name="username" value="wqxzgyfo"/>
-        <property name="password" value="ARZP2p6IWSNEdof_U8wQFuJNKxbcpmGn"/>
+        <property name="url" value="#{ 'jdbc:postgresql://' + @dbUrl.getHost() + ':' + @dbUrl.getPort() + @dbUrl.getPath() + '?ssl=true&amp;sslfactory=org.postgresql.ssl.NonValidatingFactory' }"/>
+        <property name="username" value="#{ @dbUrl.getUserInfo().split(':')[0] }"/>
+        <property name="password" value="#{ @dbUrl.getUserInfo().split(':')[1] }"/>
     </bean>
 </beans>

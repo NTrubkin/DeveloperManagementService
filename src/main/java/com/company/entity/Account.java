@@ -9,7 +9,7 @@ import javax.persistence.*;
  * Аккаунт пользователя позволяет однозначно аутентифицировать и авторизовать пользователя.
  */
 @Entity
-@Table(name = "account", schema = "public", catalog = "wqxzgyfo")
+@Table(name = "account", schema = "public")
 public class Account {
 
     @Id

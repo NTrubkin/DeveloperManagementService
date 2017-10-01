@@ -48,11 +48,14 @@
         </property>
     </bean>
 
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-          destroy-method="close">
+    <bean class="java.net.URI" id="dbUrl">
+        <constructor-arg value="${DATABASE_URL}"/>
+    </bean>
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="org.postgresql.Driver"/>
-        <property name="url" value="jdbc:postgresql://ec2-79-125-118-221.eu-west-1.compute.amazonaws.com:5432/d4af08ps4mkb0h?ssl=true&amp;sslfactory=org.postgresql.ssl.NonValidatingFactory"/>
-        <property name="username" value="eqqynxeklqtnpo"/>
-        <property name="password" value="bd1946cf8d37346ad137aebd98f70f4c0f156b5eeed2ace1b665f92223c9f25e"/>
+        <property name="url" value="#{ 'jdbc:postgresql://' + @dbUrl.getHost() + @dbUrl.getPath() }"/>
+        <property name="username" value="#{ @dbUrl.getUserInfo().split(':')[0] }"/>
+        <property name="password" value="#{ @dbUrl.getUserInfo().split(':')[1] }"/>
     </bean>
 </beans>

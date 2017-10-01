@@ -1,4 +1,3 @@
-var prefix = '/developer-management-service-1.0-SNAPSHOT';
 var projectId = 0;
 function init(projectToOpen) {
     projectId = projectToOpen;
@@ -113,5 +112,5 @@ function formProjectsComboBoxFromJson(result, defaultId) {
 }
 
 function onSelectorChanged() {
-    window.location.replace(prefix + '/manager/devs/' + $('#projectSelector').val());
+    window.location.replace('/manager/devs/' + $('#projectSelector').val());
 }

@@ -1,5 +1,3 @@
-var prefix = '/developer-management-service-1.0-SNAPSHOT';
-
 function formCurrentProjectPanel() {
     $.ajax({
         type: 'GET',

@@ -1,4 +1,3 @@
-var prefix = '/developer-management-service-1.0-SNAPSHOT';
 var projectId = 0;
 
 function formChatPanel(projId) {

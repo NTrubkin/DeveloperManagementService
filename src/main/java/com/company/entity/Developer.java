@@ -8,7 +8,7 @@ import javax.persistence.*;
  * Hibernate сущность, которая представляет факт привязки разработчика, к проекту
  */
 @Entity
-@Table(name = "developer", schema = "public", catalog = "wqxzgyfo")
+@Table(name = "developer", schema = "public")
 public class Developer {
     @Id
     @Column(name = "id")

@@ -51,8 +51,8 @@
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close">
         <property name="driverClassName" value="org.postgresql.Driver"/>
-        <property name="url" value="jdbc:postgresql://packy.db.elephantsql.com:5432/wqxzgyfo"/>
-        <property name="username" value="wqxzgyfo"/>
-        <property name="password" value="ARZP2p6IWSNEdof_U8wQFuJNKxbcpmGn"/>
+        <property name="url" value="jdbc:postgresql://ec2-79-125-118-221.eu-west-1.compute.amazonaws.com:5432/d4af08ps4mkb0h?ssl=true&amp;sslfactory=org.postgresql.ssl.NonValidatingFactory"/>
+        <property name="username" value="eqqynxeklqtnpo"/>
+        <property name="password" value="bd1946cf8d37346ad137aebd98f70f4c0f156b5eeed2ace1b665f92223c9f25e"/>
     </bean>
 </beans>
